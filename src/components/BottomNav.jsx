@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 const navItems = [
   { to: '/', label: 'Home', icon: 'fa-house' },
   { to: '/exams', label: 'Exams', icon: 'fa-building-columns' },
+  { to: '/books', label: 'Books', icon: 'fa-book-open' },
   { to: '/quiz', label: 'Quiz', icon: 'fa-brain' },
   { to: '/dashboard', label: 'Progress', icon: 'fa-chart-simple' },
-  { to: '/profile', label: 'Profile', icon: 'fa-user' },
 ]
 
 export default function BottomNav() {
