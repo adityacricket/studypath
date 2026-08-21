@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext.jsx'
 
 export default function Settings() {
@@ -34,7 +35,6 @@ export default function Settings() {
         </div>
       )}
 
-      {/* Appearance */}
       <div className="card p-4">
         <p className="text-xs font-semibold text-slate-400 mb-3">APPEARANCE</p>
         <ToggleRow
@@ -46,7 +46,6 @@ export default function Settings() {
         />
       </div>
 
-      {/* Notifications */}
       <div className="card p-4 space-y-1">
         <p className="text-xs font-semibold text-slate-400 mb-3">NOTIFICATIONS</p>
         <ToggleRow
@@ -65,22 +64,20 @@ export default function Settings() {
         />
       </div>
 
-      {/* Premium */}
       <div className="card p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
         <p className="font-bold mb-1"><i className="fas fa-crown mr-2"></i>StudyPath Premium</p>
-        <p className="text-sm text-white/85 mb-3">Ad-free experience, premium mock test analytics & exclusive study packs.</p>
-        <button className="bg-white text-indigo-700 font-bold text-sm px-4 py-2 rounded-xl">Upgrade Now</button>
+        <p className="text-sm text-white/85 mb-3">Deep chapters, advanced practice, mock analytics, smarter revision and an ad-light study experience.</p>
+        <Link to="/premium" className="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-indigo-700">View Premium</Link>
       </div>
 
-      {/* Data & Privacy */}
       <div className="card p-4 space-y-3">
-        <p className="text-xs font-semibold text-slate-400 mb-1">DATA & PRIVACY</p>
+        <p className="text-xs font-semibold text-slate-400 mb-1">ACCOUNT & PRIVACY</p>
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Your data is currently stored locally on this device only. No account required. A database & login system can be added later without losing this data structure.
+          Open your account page to sign in when cloud sync is configured, export your local StudyPath data, or delete local data from this device.
         </p>
+        <Link to="/account" className="btn-outline w-full">Open Account & Privacy</Link>
       </div>
 
-      {/* Reset progress */}
       <div className="card p-4 space-y-3">
         <p className="text-xs font-semibold text-slate-400 mb-1">RESET</p>
         {!confirmReset ? (
@@ -103,7 +100,7 @@ export default function Settings() {
           </button>
         ) : (
           <div className="space-y-2 animate-slide-up">
-            <p className="text-sm text-rose-500">This will reset your profile, settings, and ALL data. This cannot be undone.</p>
+            <p className="text-sm text-rose-500">This will reset your profile, settings, and ALL local data. This cannot be undone.</p>
             <div className="flex gap-2">
               <button onClick={handleResetAll} className="btn-primary flex-1 bg-rose-500 hover:bg-rose-600">Yes, Reset Everything</button>
               <button onClick={() => setConfirmResetAll(false)} className="btn-outline flex-1">Cancel</button>
@@ -112,7 +109,7 @@ export default function Settings() {
         )}
       </div>
 
-      <p className="text-center text-xs text-slate-400">StudyPath v1.0.0 • Made for Indian students 🇮🇳</p>
+      <p className="text-center text-xs text-slate-400">StudyPath v1.1.0 • Made for Indian students 🇮🇳</p>
     </div>
   )
 }
