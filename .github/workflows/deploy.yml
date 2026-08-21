@@ -34,6 +34,12 @@ jobs:
       - name: Build StudyPath
         run: npm run build -- --base=/studypath/
 
+      - name: Create SPA fallback
+        run: cp dist/index.html dist/404.html
+
+      - name: Verify build output
+        run: test -f dist/index.html && test -f dist/404.html
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
