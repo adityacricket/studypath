@@ -9,15 +9,13 @@ export function AppProvider({ children }) {
   const [progress, setProgressState] = useState(() => storage.getProgress())
   const [quizHistory, setQuizHistoryState] = useState(() => storage.getQuizHistory())
   const [savedResources, setSavedResourcesState] = useState(() => storage.getSavedResources())
+  const [mistakes, setMistakesState] = useState(() => storage.getMistakes())
+  const [chapterProgress, setChapterProgressState] = useState(() => storage.getChapterProgress())
 
-  // Apply dark mode class to html element
   useEffect(() => {
     const root = document.documentElement
-    if (settings.theme === 'dark') {
-      root.classList.add('dark')
-    } else {
-      root.classList.remove('dark')
-    }
+    if (settings.theme === 'dark') root.classList.add('dark')
+    else root.classList.remove('dark')
   }, [settings.theme])
 
   const updateProfile = useCallback((updates) => {
@@ -61,22 +59,25 @@ export function AppProvider({ children }) {
     })
   }, [])
 
-  const logStudyHours = useCallback((hours, subject) => {
-    setProgressState((prev) => {
-      const entry = { date: new Date().toISOString(), hours, subject: subject || 'General' }
-      const next = {
-        ...prev,
-        studyHours: Math.round((prev.studyHours + hours) * 100) / 100,
-        studyLog: [entry, ...prev.studyLog].slice(0, 200),
-      }
-      storage.setProgress(next)
-      return next
-    })
+  const logStudyHours = useCallback((hours, subject, topic = null) => {
+    const next = storage.logStudySession(hours, subject, topic)
+    setProgressState(next)
+  }, [])
+
+  const completeStudySession = useCallback((hours, subject, topic = null) => {
+    const next = storage.logStudySession(hours, subject, topic)
+    setProgressState(next)
   }, [])
 
   const addMockScore = useCallback((mockResult) => {
     setProgressState((prev) => {
-      const next = { ...prev, mockScores: [{ ...mockResult, date: new Date().toISOString() }, ...prev.mockScores].slice(0, 50) }
+      const next = {
+        ...prev,
+        mockScores: [
+          { ...mockResult, date: new Date().toISOString() },
+          ...prev.mockScores,
+        ].slice(0, 50),
+      }
       storage.setProgress(next)
       return next
     })
@@ -85,6 +86,21 @@ export function AppProvider({ children }) {
   const addQuizResult = useCallback((result) => {
     const updated = storage.addQuizResult(result)
     setQuizHistoryState(updated)
+  }, [])
+
+  const recordMistake = useCallback((mistake) => {
+    const updated = storage.addMistake(mistake)
+    setMistakesState(updated)
+  }, [])
+
+  const fixMistake = useCallback((mistakeId) => {
+    const updated = storage.markMistakeFixed(mistakeId)
+    setMistakesState(updated)
+  }, [])
+
+  const updateChapterProgress = useCallback((chapterId, updates) => {
+    const updated = storage.updateChapterProgress(chapterId, updates)
+    setChapterProgressState(updated)
   }, [])
 
   const toggleSavedResource = useCallback((resourceId) => {
@@ -96,6 +112,7 @@ export function AppProvider({ children }) {
     storage.resetProgress()
     setProgressState(defaultProgress)
     setQuizHistoryState([])
+    setMistakesState([])
   }, [])
 
   const resetAll = useCallback(() => {
@@ -105,6 +122,8 @@ export function AppProvider({ children }) {
     setProgressState(defaultProgress)
     setQuizHistoryState([])
     setSavedResourcesState([])
+    setMistakesState([])
+    setChapterProgressState({})
   }, [])
 
   const value = {
@@ -117,11 +136,17 @@ export function AppProvider({ children }) {
     updateProgress,
     markTopicComplete,
     logStudyHours,
+    completeStudySession,
     addMockScore,
     quizHistory,
     addQuizResult,
     savedResources,
     toggleSavedResource,
+    mistakes,
+    recordMistake,
+    fixMistake,
+    chapterProgress,
+    updateChapterProgress,
     resetProgress,
     resetAll,
   }
