@@ -1,4 +1,5 @@
 name: Deploy StudyPath
+# Force a fresh GitHub Pages deployment of the current main branch.
 
 on:
   push:
