@@ -8,6 +8,9 @@ import Header from './components/Header.jsx'
 import Home from './pages/Home.jsx'
 import ExamHub from './pages/ExamHub.jsx'
 import ExamDetails from './pages/ExamDetails.jsx'
+import Books from './pages/Books.jsx'
+import BookIndex from './pages/BookIndex.jsx'
+import BookChapter from './pages/BookChapter.jsx'
 import Tools from './pages/Tools.jsx'
 import ToolDetail from './pages/ToolDetail.jsx'
 import Quiz from './pages/Quiz.jsx'
@@ -40,6 +43,10 @@ export default function App() {
 
           <Route path="/exams" element={<ExamHub />} />
           <Route path="/exams/:examId" element={<ExamDetails />} />
+
+          <Route path="/books" element={<Books />} />
+          <Route path="/books/:examId" element={<BookIndex />} />
+          <Route path="/books/:examId/:chapterId" element={<BookChapter />} />
 
           <Route path="/tools" element={<Tools />} />
           <Route path="/tools/:toolId" element={<ToolDetail />} />
