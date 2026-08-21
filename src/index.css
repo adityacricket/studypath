@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+  @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3730a3;
+}
+
+/* Component utility classes */
+@layer components {
+  .card {
+    @apply bg-white dark:bg-slate-900 rounded-2xl shadow-card border border-slate-100 dark:border-slate-800;
+  }
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-semibold rounded-xl px-4 py-2.5 transition-colors duration-150 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-primary-50 hover:bg-primary-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-primary-700 dark:text-primary-300 font-semibold rounded-xl px-4 py-2.5 transition-colors duration-150;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 font-semibold rounded-xl px-4 py-2.5 transition-colors duration-150;
+  }
+  .input-field {
+    @apply w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-400 transition;
+  }
+  .section-title {
+    @apply text-lg font-bold text-slate-800 dark:text-slate-100;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+  .page-container {
+    @apply max-w-6xl mx-auto px-4 pt-4 pb-28 md:pb-10 md:pl-24;
+  }
+}
+
+/* Ad / Sponsored placeholder styles */
+.ad-slot {
+  @apply card border-dashed border-2 border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center text-center text-slate-400 dark:text-slate-500 text-xs py-4 px-3 bg-slate-50/50 dark:bg-slate-900/50;
+}
+
+.sponsored-tag {
+  @apply badge bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300;
+}
+
+.premium-tag {
+  @apply badge bg-gradient-to-r from-indigo-500 to-purple-500 text-white;
+}
