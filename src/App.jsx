@@ -14,6 +14,7 @@ import Quiz from './pages/Quiz.jsx'
 import QuizPlay from './pages/QuizPlay.jsx'
 import QuizResult from './pages/QuizResult.jsx'
 import Planner from './pages/Planner.jsx'
+import StudyCoach from './pages/StudyCoach.jsx'
 import Careers from './pages/Careers.jsx'
 import CareerDetail from './pages/CareerDetail.jsx'
 import Resources from './pages/Resources.jsx'
@@ -25,19 +26,15 @@ import SearchPage from './pages/SearchPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
-
   return (
     <div className="min-h-screen">
-
       <SideNav />
-
       <Header />
 
       <main className="page-container animate-fade-in">
-
         <Routes>
-
           <Route path="/" element={<Home />} />
+          <Route path="/coach" element={<StudyCoach />} />
 
           <Route path="/exams" element={<ExamHub />} />
           <Route path="/exams/:examId" element={<ExamDetails />} />
@@ -62,15 +59,11 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
 
           <Route path="/search" element={<SearchPage />} />
-
           <Route path="*" element={<NotFound />} />
-
         </Routes>
-
       </main>
 
       <BottomNav />
-
     </div>
   )
 }
