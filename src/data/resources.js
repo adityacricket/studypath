@@ -1,294 +1,471 @@
-// Resource library - original content, structured for updates
-export const resourceCategories = [
-  { id: 'formula-sheets', name: 'Formula Sheets', icon: 'fa-square-root-variable', color: 'bg-indigo-500' },
-  { id: 'revision-notes', name: 'Revision Notes', icon: 'fa-note-sticky', color: 'bg-emerald-500' },
-  { id: 'vocabulary', name: 'Vocabulary', icon: 'fa-spell-check', color: 'bg-amber-500' },
-  { id: 'practice-material', name: 'Practice Material', icon: 'fa-pen-ruler', color: 'bg-rose-500' },
-  { id: 'study-pdfs', name: 'Original Study PDFs', icon: 'fa-file-lines', color: 'bg-sky-500' },
-  { id: 'checklists', name: 'Checklists', icon: 'fa-list-check', color: 'bg-purple-500' },
-]
+// StudyPath - Free Learning Resources
+// Official + freely available learning platforms
 
 export const resources = [
-  // Formula Sheets
+
+  // =========================
+  // GENERAL FREE RESOURCES
+  // =========================
+
   {
-    id: 'formula-percentage',
-    category: 'formula-sheets',
-    title: 'Percentage & Ratio Formulas',
-    tags: ['quant', 'percentage', 'ratio'],
+    id: "general-ncert",
+    category: "General",
+    title: "NCERT Textbooks",
+    type: "Notes & Books",
+    tags: ["NCERT", "Books", "School", "Foundation"],
+    exams: ["JEE", "NEET", "UPSC", "SSC", "NDA", "CDS", "CUET"],
     premium: false,
-    content: [
-      'x% of y = (x/100) × y',
-      'To increase A by x%: A × (1 + x/100)',
-      'To decrease A by x%: A × (1 − x/100)',
-      'If A is x% more than B: A = B × (1 + x/100)',
-      'Percentage change = [(New − Old)/Old] × 100',
-      'If a:b = m:n, then a = mk, b = nk for some constant k',
-    ]
-  },
-  {
-    id: 'formula-si-ci',
-    category: 'formula-sheets',
-    title: 'Simple & Compound Interest Formulas',
-    tags: ['quant', 'interest'],
-    premium: false,
-    content: [
-      'Simple Interest = (P × R × T) / 100',
-      'Amount (SI) = P + SI',
-      'Compound Interest Amount = P × (1 + R/100)^T',
-      'CI = Amount − P',
-      'Difference between CI and SI (2 years) = P × (R/100)²',
-    ]
-  },
-  {
-    id: 'formula-mensuration',
-    category: 'formula-sheets',
-    title: 'Mensuration Formulas (2D & 3D)',
-    tags: ['quant', 'geometry'],
-    premium: false,
-    content: [
-      'Area of rectangle = length × breadth',
-      'Area of triangle = 1/2 × base × height',
-      'Area of circle = πr²; Circumference = 2πr',
-      'Volume of cuboid = l × b × h',
-      'Volume of cylinder = πr²h',
-      'Volume of sphere = 4/3 πr³',
-      'Total Surface Area of cube = 6a²',
-    ]
-  },
-  {
-    id: 'formula-trigonometry',
-    category: 'formula-sheets',
-    title: 'Trigonometry Quick Reference',
-    tags: ['quant', 'nda', 'cds'],
-    premium: false,
-    content: [
-      'sin²θ + cos²θ = 1',
-      '1 + tan²θ = sec²θ',
-      '1 + cot²θ = csc²θ',
-      'sin(90°−θ) = cosθ; cos(90°−θ) = sinθ',
-      'sin2θ = 2sinθcosθ',
-      'cos2θ = cos²θ − sin²θ',
-    ]
+    description: "Official NCERT textbooks available online for free.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
   },
 
-  // Revision Notes
   {
-    id: 'notes-indian-polity',
-    category: 'revision-notes',
-    title: 'Indian Polity: Quick Revision Notes',
-    tags: ['gk', 'polity', 'cuet'],
+    id: "general-diksha",
+    category: "General",
+    title: "DIKSHA",
+    type: "Courses & Learning",
+    tags: ["Courses", "Videos", "Learning"],
+    exams: ["General"],
     premium: false,
-    content: [
-      'The Constitution of India came into force on 26 January 1950.',
-      'It is the longest written constitution in the world.',
-      'Fundamental Rights: Articles 12–35 (originally 7, now 6 after Right to Property was removed).',
-      'Directive Principles of State Policy: Articles 36–51, inspired by the Irish Constitution.',
-      'The Parliament consists of Lok Sabha (Lower House) and Rajya Sabha (Upper House).',
-      'The President is the constitutional head of state; the Prime Minister is the head of government.',
-    ]
-  },
-  {
-    id: 'notes-modern-history',
-    category: 'revision-notes',
-    title: 'Modern Indian History: Key Events Timeline',
-    tags: ['gk', 'history'],
-    premium: false,
-    content: [
-      '1857 – Revolt of 1857 (First War of Independence)',
-      '1885 – Formation of Indian National Congress',
-      '1919 – Jallianwala Bagh Massacre',
-      '1930 – Salt March (Dandi March) led by Gandhi',
-      '1942 – Quit India Movement',
-      '1947 – India gains Independence (15 August)',
-      '1950 – Constitution of India comes into effect (26 January)',
-    ]
-  },
-  {
-    id: 'notes-computer-basics',
-    category: 'revision-notes',
-    title: 'Computer Knowledge Basics',
-    tags: ['gk', 'computer', 'ssc'],
-    premium: false,
-    content: [
-      'CPU = Central Processing Unit, the "brain" of the computer.',
-      'RAM (volatile) vs ROM (non-volatile) memory.',
-      'LAN = Local Area Network; WAN = Wide Area Network.',
-      'HTTP = HyperText Transfer Protocol; HTTPS is the secure version.',
-      'MS Office suite: Word (documents), Excel (spreadsheets), PowerPoint (presentations).',
-    ]
+    description: "Free digital learning resources and courses.",
+    source: "DIKSHA",
+    url: "https://diksha.gov.in/"
   },
 
-  // Vocabulary
   {
-    id: 'vocab-list-1',
-    category: 'vocabulary',
-    title: 'High-Frequency Vocabulary List — Set 1',
-    tags: ['english', 'vocabulary'],
+    id: "general-swayam",
+    category: "General",
+    title: "SWAYAM",
+    type: "Free Courses",
+    tags: ["Courses", "University", "Skills"],
+    exams: ["General"],
     premium: false,
-    content: [
-      'Abate (v.) — to reduce in intensity',
-      'Candid (adj.) — truthful and straightforward',
-      'Diligent (adj.) — showing care in one\'s work',
-      'Eloquent (adj.) — fluent and persuasive in speech',
-      'Frugal (adj.) — economical, avoiding waste',
-      'Gregarious (adj.) — sociable, fond of company',
-      'Hostile (adj.) — unfriendly, antagonistic',
-      'Impeccable (adj.) — flawless, without fault',
-    ]
-  },
-  {
-    id: 'vocab-list-2',
-    category: 'vocabulary',
-    title: 'High-Frequency Vocabulary List — Set 2',
-    tags: ['english', 'vocabulary'],
-    premium: false,
-    content: [
-      'Jubilant (adj.) — feeling great happiness',
-      'Kindle (v.) — to light a fire; to arouse an emotion',
-      'Lucid (adj.) — clear and easy to understand',
-      'Meticulous (adj.) — showing great attention to detail',
-      'Novice (n.) — a beginner',
-      'Obsolete (adj.) — no longer in use',
-      'Pragmatic (adj.) — practical rather than idealistic',
-      'Quaint (adj.) — attractively unusual or old-fashioned',
-    ]
-  },
-  {
-    id: 'vocab-idioms',
-    category: 'vocabulary',
-    title: 'Common Idioms & Phrases for Exams',
-    tags: ['english', 'idioms'],
-    premium: false,
-    content: [
-      'Break the ice — to initiate conversation in a social setting',
-      'Cut corners — to do something the cheapest/easiest way',
-      'Hit the nail on the head — to describe exactly what is causing a situation',
-      'Once in a blue moon — very rarely',
-      'The ball is in your court — it is your decision/responsibility now',
-      'Under the weather — feeling unwell',
-    ]
+    description: "Free courses from universities and institutions.",
+    source: "SWAYAM",
+    url: "https://swayam.gov.in/"
   },
 
-  // Practice material
   {
-    id: 'practice-quant-set',
-    category: 'practice-material',
-    title: 'Quant Practice Set — Mixed Topics (20 Questions)',
-    tags: ['quant', 'practice'],
+    id: "general-nptel",
+    category: "General",
+    title: "NPTEL",
+    type: "Courses",
+    tags: ["Engineering", "Science", "Technology"],
+    exams: ["JEE", "GATE", "General"],
     premium: false,
-    content: [
-      'This is a curated practice set covering percentage, ratio, average, profit-loss and time & work.',
-      'Recommended: Attempt within 20 minutes to build speed.',
-      'Use the Quiz section for an interactive version with instant scoring!',
-    ],
-    linkTo: '/quiz?subject=quant'
-  },
-  {
-    id: 'practice-reasoning-set',
-    category: 'practice-material',
-    title: 'Reasoning Practice Set — Mixed Topics (20 Questions)',
-    tags: ['reasoning', 'practice'],
-    premium: false,
-    content: [
-      'Covers coding-decoding, series, blood relations, syllogism and analogy.',
-      'Ideal for daily practice — aim for under 15 minutes.',
-      'Use the Quiz section for an interactive version with instant scoring!',
-    ],
-    linkTo: '/quiz?subject=reasoning'
+    description: "Free lectures and courses from IITs and IISc.",
+    source: "NPTEL",
+    url: "https://nptel.ac.in/"
   },
 
-  // Study PDFs (original notes described as downloadable-style content, rendered in-app)
+  // =========================
+  // JEE
+  // =========================
+
   {
-    id: 'pdf-ssc-cgl-overview',
-    category: 'study-pdfs',
-    title: 'SSC CGL Complete Overview (Original Notes)',
-    tags: ['ssc', 'cgl'],
+    id: "jee-main-official",
+    category: "JEE",
+    title: "JEE Main Official Website",
+    type: "Official",
+    tags: ["JEE Main", "Notifications", "Syllabus", "Papers"],
+    exams: ["JEE Main"],
     premium: false,
-    content: [
-      'A structured original summary covering SSC CGL eligibility, exam pattern, syllabus and preparation strategy.',
-      'View the full structured details in the Exam Hub → SSC CGL page.',
-    ],
-    linkTo: '/exams/ssc-cgl'
-  },
-  {
-    id: 'pdf-nda-cds-overview',
-    category: 'study-pdfs',
-    title: 'NDA & CDS Preparation Guide (Original Notes)',
-    tags: ['defence', 'nda', 'cds'],
-    premium: false,
-    content: [
-      'Covers eligibility, exam pattern, SSB process and preparation strategy for both NDA and CDS.',
-      'View full details in the Exam Hub sections for NDA and CDS.',
-    ],
-    linkTo: '/exams/nda'
-  },
-  {
-    id: 'pdf-premium-mocktest-pack',
-    category: 'study-pdfs',
-    title: 'Premium Mock Test Analysis Pack',
-    tags: ['premium'],
-    premium: true,
-    content: [
-      'Detailed mock test performance analytics, topic-wise weakness mapping and personalized improvement plan.',
-      'Unlock with StudyPath Premium.',
-    ]
+    description: "Official JEE Main information, notices and examination updates.",
+    source: "NTA",
+    url: "https://jeemain.nta.nic.in/"
   },
 
-  // Checklists
   {
-    id: 'checklist-exam-day',
-    category: 'checklists',
-    title: 'Exam Day Checklist',
-    tags: ['general'],
+    id: "jee-advanced-official",
+    category: "JEE",
+    title: "JEE Advanced Official Website",
+    type: "Official",
+    tags: ["JEE Advanced", "Papers", "Syllabus"],
+    exams: ["JEE Advanced"],
     premium: false,
-    content: [
-      '☐ Admit card (printed copy)',
-      '☐ Valid photo ID proof',
-      '☐ Passport-size photographs (if required)',
-      '☐ Reach exam center at least 1 hour early',
-      '☐ Carry permitted stationery only',
-      '☐ Check dress code / material restrictions in advance',
-    ]
+    description: "Official JEE Advanced website with papers, syllabus and updates.",
+    source: "JEE Advanced",
+    url: "https://jeeadv.ac.in/"
   },
-  {
-    id: 'checklist-daily-study',
-    category: 'checklists',
-    title: 'Daily Study Routine Checklist',
-    tags: ['planning'],
-    premium: false,
-    content: [
-      '☐ Revise previous day\'s topics (15 min)',
-      '☐ Study 1-2 new topics with notes',
-      '☐ Solve 15-20 practice questions',
-      '☐ Read newspaper / current affairs (15 min)',
-      '☐ Attempt at least 1 quiz',
-      '☐ Note down weak areas for next day\'s revision',
-    ]
-  },
-  {
-    id: 'checklist-application',
-    category: 'checklists',
-    title: 'Exam Application Checklist',
-    tags: ['general'],
-    premium: false,
-    content: [
-      '☐ Scanned photograph & signature (as per specifications)',
-      '☐ Category certificate (if applicable)',
-      '☐ Educational certificates',
-      '☐ Valid ID & address proof',
-      '☐ Active email ID & mobile number',
-      '☐ Application fee payment method ready',
-    ]
-  },
-]
 
-export function getResourcesByCategory(categoryId) {
-  return resources.filter((r) => r.category === categoryId)
-}
+  {
+    id: "jee-ncert",
+    category: "JEE",
+    title: "NCERT for JEE Foundation",
+    type: "Books",
+    tags: ["Physics", "Chemistry", "Mathematics", "NCERT"],
+    exams: ["JEE Main", "JEE Advanced"],
+    premium: false,
+    description: "Use NCERT textbooks to build strong fundamentals.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
 
-export function searchResources(query) {
-  const q = query.toLowerCase()
-  return resources.filter(
-    (r) => r.title.toLowerCase().includes(q) || r.tags.some((t) => t.toLowerCase().includes(q))
-  )
-}
+  // =========================
+  // NEET
+  // =========================
+
+  {
+    id: "neet-official",
+    category: "NEET",
+    title: "NEET UG Official Website",
+    type: "Official",
+    tags: ["NEET", "Syllabus", "Notifications", "Exam"],
+    exams: ["NEET UG"],
+    premium: false,
+    description: "Official NEET UG information, notices and examination resources.",
+    source: "NTA",
+    url: "https://neet.nta.nic.in/"
+  },
+
+  {
+    id: "neet-ncert",
+    category: "NEET",
+    title: "NCERT Biology, Physics & Chemistry",
+    type: "Books",
+    tags: ["Biology", "Physics", "Chemistry", "NCERT"],
+    exams: ["NEET UG"],
+    premium: false,
+    description: "Official NCERT textbooks for NEET preparation.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // UPSC
+  // =========================
+
+  {
+    id: "upsc-official",
+    category: "UPSC",
+    title: "UPSC Official Website",
+    type: "Official",
+    tags: ["UPSC", "Syllabus", "Notifications", "PYQ"],
+    exams: ["UPSC CSE"],
+    premium: false,
+    description: "Official UPSC notifications, syllabus, examination information and previous papers.",
+    source: "UPSC",
+    url: "https://upsc.gov.in/"
+  },
+
+  {
+    id: "upsc-pyq",
+    category: "UPSC",
+    title: "UPSC Previous Year Papers",
+    type: "PYQs",
+    tags: ["PYQ", "Previous Papers", "Prelims", "Mains"],
+    exams: ["UPSC CSE"],
+    premium: false,
+    description: "Official previous question papers released by UPSC.",
+    source: "UPSC",
+    url: "https://upsc.gov.in/examinations/previous-question-papers"
+  },
+
+  {
+    id: "upsc-ncert",
+    category: "UPSC",
+    title: "NCERT Foundation for UPSC",
+    type: "Books",
+    tags: ["History", "Geography", "Polity", "Economics", "NCERT"],
+    exams: ["UPSC CSE"],
+    premium: false,
+    description: "Free NCERT textbooks useful for UPSC foundation preparation.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // SSC
+  // =========================
+
+  {
+    id: "ssc-official",
+    category: "SSC",
+    title: "SSC Official Website",
+    type: "Official",
+    tags: ["SSC", "CGL", "CHSL", "MTS", "GD", "Notifications"],
+    exams: ["SSC CGL", "SSC CHSL", "SSC MTS", "SSC GD"],
+    premium: false,
+    description: "Official SSC notifications, syllabus, examination information and results.",
+    source: "Staff Selection Commission",
+    url: "https://ssc.gov.in/"
+  },
+
+  {
+    id: "ssc-cgl-papers",
+    category: "SSC",
+    title: "SSC Previous Year Papers",
+    type: "PYQs",
+    tags: ["SSC", "PYQ", "CGL", "CHSL"],
+    exams: ["SSC CGL", "SSC CHSL"],
+    premium: false,
+    description: "Use official SSC information and released examination material for practice.",
+    source: "SSC",
+    url: "https://ssc.gov.in/"
+  },
+
+  {
+    id: "ssc-ncert",
+    category: "SSC",
+    title: "NCERT Books for SSC Foundation",
+    type: "Books",
+    tags: ["GK", "History", "Geography", "Science"],
+    exams: ["SSC CGL", "SSC CHSL", "SSC MTS"],
+    premium: false,
+    description: "NCERT books for building General Awareness fundamentals.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // NDA
+  // =========================
+
+  {
+    id: "nda-upsc",
+    category: "Defence",
+    title: "NDA Official Information",
+    type: "Official",
+    tags: ["NDA", "UPSC", "Notification", "Syllabus"],
+    exams: ["NDA"],
+    premium: false,
+    description: "Official UPSC information for NDA examination.",
+    source: "UPSC",
+    url: "https://upsc.gov.in/"
+  },
+
+  {
+    id: "nda-ncert",
+    category: "Defence",
+    title: "NCERT Books for NDA",
+    type: "Books",
+    tags: ["Maths", "Science", "History", "Geography"],
+    exams: ["NDA"],
+    premium: false,
+    description: "Free NCERT textbooks for building NDA fundamentals.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // CDS
+  // =========================
+
+  {
+    id: "cds-upsc",
+    category: "Defence",
+    title: "CDS Official Information",
+    type: "Official",
+    tags: ["CDS", "UPSC", "Notification", "Syllabus"],
+    exams: ["CDS"],
+    premium: false,
+    description: "Official UPSC information for CDS examination.",
+    source: "UPSC",
+    url: "https://upsc.gov.in/"
+  },
+
+  {
+    id: "cds-ncert",
+    category: "Defence",
+    title: "NCERT Foundation for CDS",
+    type: "Books",
+    tags: ["History", "Geography", "Science", "Polity"],
+    exams: ["CDS"],
+    premium: false,
+    description: "Free NCERT textbooks useful for CDS General Knowledge preparation.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // CUET
+  // =========================
+
+  {
+    id: "cuet-official",
+    category: "University Admission",
+    title: "CUET UG Official Website",
+    type: "Official",
+    tags: ["CUET", "UG", "University", "Syllabus"],
+    exams: ["CUET UG"],
+    premium: false,
+    description: "Official CUET UG information, notices and examination updates.",
+    source: "NTA",
+    url: "https://exams.nta.nic.in/cuet-ug/"
+  },
+
+  {
+    id: "cuet-ncert",
+    category: "University Admission",
+    title: "NCERT Books for CUET",
+    type: "Books",
+    tags: ["NCERT", "Domain Subjects", "English"],
+    exams: ["CUET UG"],
+    premium: false,
+    description: "Free NCERT textbooks for CUET domain subjects.",
+    source: "NCERT",
+    url: "https://ncert.nic.in/textbook.php"
+  },
+
+  // =========================
+  // RRB / RAILWAYS
+  // =========================
+
+  {
+    id: "rrb-official",
+    category: "Railways",
+    title: "Indian Railways Recruitment",
+    type: "Official",
+    tags: ["Railway", "RRB", "Recruitment", "Notifications"],
+    exams: ["RRB NTPC", "RRB Group D", "RRB ALP"],
+    premium: false,
+    description: "Official railway recruitment information and notifications.",
+    source: "Indian Railways",
+    url: "https://indianrailways.gov.in/"
+  },
+
+  {
+    id: "rrb-ntpc",
+    category: "Railways",
+    title: "RRB NTPC Resources",
+    type: "Study Material",
+    tags: ["RRB NTPC", "Reasoning", "Maths", "GK"],
+    exams: ["RRB NTPC"],
+    premium: false,
+    description: "Free foundation resources for RRB NTPC preparation.",
+    source: "StudyPath",
+    url: "https://indianrailways.gov.in/"
+  },
+
+  // =========================
+  // BANKING
+  // =========================
+
+  {
+    id: "ibps",
+    category: "Banking",
+    title: "IBPS Official Website",
+    type: "Official",
+    tags: ["Banking", "IBPS", "PO", "Clerk"],
+    exams: ["IBPS PO", "IBPS Clerk", "IBPS RRB"],
+    premium: false,
+    description: "Official IBPS notifications and examination information.",
+    source: "IBPS",
+    url: "https://www.ibps.in/"
+  },
+
+  {
+    id: "sbi-careers",
+    category: "Banking",
+    title: "SBI Careers",
+    type: "Official",
+    tags: ["SBI", "PO", "Clerk", "Banking"],
+    exams: ["SBI PO", "SBI Clerk"],
+    premium: false,
+    description: "Official SBI recruitment and career information.",
+    source: "State Bank of India",
+    url: "https://sbi.co.in/web/careers"
+  },
+
+  // =========================
+  // CAT
+  // =========================
+
+  {
+    id: "cat-iim",
+    category: "Management",
+    title: "CAT Official Information",
+    type: "Official",
+    tags: ["CAT", "MBA", "IIM", "Management"],
+    exams: ["CAT"],
+    premium: false,
+    description: "Official CAT examination information and updates.",
+    source: "IIM",
+    url: "https://iimcat.ac.in/"
+  },
+
+  // =========================
+  // GATE
+  // =========================
+
+  {
+    id: "gate-official",
+    category: "Engineering",
+    title: "GATE Official Website",
+    type: "Official",
+    tags: ["GATE", "Engineering", "IIT", "PYQ"],
+    exams: ["GATE"],
+    premium: false,
+    description: "Official GATE examination information, syllabus and papers.",
+    source: "GATE",
+    url: "https://gate2026.iitg.ac.in/"
+  },
+
+  // =========================
+  // FREE LEARNING PLATFORMS
+  // =========================
+
+  {
+    id: "khan-academy",
+    category: "Free Learning",
+    title: "Khan Academy",
+    type: "Videos & Practice",
+    tags: ["Maths", "Science", "Practice", "Videos"],
+    exams: ["JEE", "NEET", "General"],
+    premium: false,
+    description: "Free lessons and practice for mathematics and science.",
+    source: "Khan Academy",
+    url: "https://www.khanacademy.org/"
+  },
+
+  {
+    id: "ncert-youtube",
+    category: "Free Learning",
+    title: "NCERT Official YouTube",
+    type: "Videos",
+    tags: ["NCERT", "Lectures", "Education"],
+    exams: ["General"],
+    premium: false,
+    description: "Educational videos and academic content from NCERT.",
+    source: "NCERT",
+    url: "https://www.youtube.com/@ncertofficial"
+  },
+
+  {
+    id: "swayam-courses",
+    category: "Free Learning",
+    title: "Free University Courses",
+    type: "Courses",
+    tags: ["University", "Courses", "Skills"],
+    exams: ["General"],
+    premium: false,
+    description: "Free online courses from Indian universities and institutions.",
+    source: "SWAYAM",
+    url: "https://swayam.gov.in/explorer"
+  }
+
+];
+
+// Get resources for a particular exam
+export const getResourcesByExam = (exam) =>
+  resources.filter((resource) =>
+    resource.exams?.some(
+      (item) => item.toLowerCase() === exam.toLowerCase()
+    )
+  );
+
+// Get resources by category
+export const getResourcesByCategory = (category) =>
+  resources.filter(
+    (resource) =>
+      resource.category.toLowerCase() === category.toLowerCase()
+  );
+
+// Get only free resources
+export const getFreeResources = () =>
+  resources.filter((resource) => resource.premium === false);
+
+// Get a resource by ID
+export const getResourceById = (id) =>
+  resources.find((resource) => resource.id === id);
