@@ -5,6 +5,7 @@ const navItems = [
   { to: '/', label: 'Home', icon: 'fa-house' },
   { to: '/coach', label: 'Study Coach', icon: 'fa-compass' },
   { to: '/exams', label: 'Exam Hub', icon: 'fa-building-columns' },
+  { to: '/books', label: 'Study Books', icon: 'fa-book-open' },
   { to: '/resources', label: 'Resources', icon: 'fa-book' },
   { to: '/quiz', label: 'Quiz & Mock', icon: 'fa-brain' },
   { to: '/planner', label: 'Planner', icon: 'fa-calendar-days' },
