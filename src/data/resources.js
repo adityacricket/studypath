@@ -1,799 +1,720 @@
-// StudyPath - Free Learning Resources
-// Structured data for the Resources page.
-// All study content below is original summaries/references.
-// External source names are listed so the library can be expanded safely.
+// StudyPath - Free Resources Database
 
 export const resourceCategories = [
   {
-    id: 'formula-sheets',
-    name: 'Formula Sheets',
-    icon: 'fa-square-root-variable',
-    color: 'bg-indigo-500'
+    id: "formula-sheets",
+    name: "Formula Sheets",
+    icon: "🧮",
+    color: "indigo"
   },
   {
-    id: 'revision-notes',
-    name: 'Revision Notes',
-    icon: 'fa-note-sticky',
-    color: 'bg-emerald-500'
+    id: "revision-notes",
+    name: "Revision Notes",
+    icon: "📝",
+    color: "emerald"
   },
   {
-    id: 'vocabulary',
-    name: 'Vocabulary',
-    icon: 'fa-spell-check',
-    color: 'bg-amber-500'
+    id: "vocabulary",
+    name: "Vocabulary",
+    icon: "📖",
+    color: "amber"
   },
   {
-    id: 'practice-material',
-    name: 'Practice Material',
-    icon: 'fa-pen-ruler',
-    color: 'bg-rose-500'
+    id: "practice-material",
+    name: "Practice Material",
+    icon: "✏️",
+    color: "rose"
   },
   {
-    id: 'study-pdfs',
-    name: 'Study Resources',
-    icon: 'fa-file-lines',
-    color: 'bg-sky-500'
+    id: "official-sources",
+    name: "Official Sources",
+    icon: "🏛️",
+    color: "blue"
   },
   {
-    id: 'checklists',
-    name: 'Checklists',
-    icon: 'fa-list-check',
-    color: 'bg-purple-500'
+    id: "free-learning",
+    name: "Free Learning",
+    icon: "🎓",
+    color: "purple"
+  },
+  {
+    id: "checklists",
+    name: "Checklists",
+    icon: "✅",
+    color: "cyan"
   }
-]
+];
 
 export const resources = [
 
-  // =========================================================
+  // ==============================
   // FORMULA SHEETS
-  // =========================================================
+  // ==============================
 
   {
-    id: 'formula-percentage',
-    category: 'formula-sheets',
-    title: 'Percentage & Ratio Formulas',
-    tags: ['quant', 'percentage', 'ratio', 'ssc', 'nda', 'banking'],
+    id: "formula-percentage",
+    category: "formula-sheets",
+    title: "Percentage & Ratio Formulas",
+    tags: ["percentage", "ratio", "quant", "ssc", "banking", "railway"],
     premium: false,
     content: [
-      'x% of y = (x/100) × y',
-      'Percentage change = [(New − Old) / Old] × 100',
-      'Increase by x% = Original × (1 + x/100)',
-      'Decrease by x% = Original × (1 − x/100)',
-      'If a:b = m:n, then a = mk and b = nk',
-      'Successive percentage changes should be calculated one after another.'
+      "Percentage = (Part / Whole) × 100",
+      "Percentage change = (Change / Original) × 100",
+      "New value after increase = Original × (1 + rate/100)",
+      "New value after decrease = Original × (1 - rate/100)",
+      "Ratio compares two quantities using the same unit."
     ]
   },
 
   {
-    id: 'formula-profit-loss',
-    category: 'formula-sheets',
-    title: 'Profit, Loss & Discount',
-    tags: ['quant', 'profit', 'loss', 'discount', 'ssc'],
+    id: "formula-profit-loss",
+    category: "formula-sheets",
+    title: "Profit, Loss & Discount",
+    tags: ["profit", "loss", "discount", "ssc", "banking"],
     premium: false,
     content: [
-      'Profit = Selling Price − Cost Price',
-      'Loss = Cost Price − Selling Price',
-      'Profit% = (Profit / Cost Price) × 100',
-      'Loss% = (Loss / Cost Price) × 100',
-      'Discount = Marked Price − Selling Price',
-      'Discount% = (Discount / Marked Price) × 100',
-      'Selling Price = Marked Price × (1 − Discount%/100)'
+      "Profit = Selling Price - Cost Price",
+      "Loss = Cost Price - Selling Price",
+      "Profit% = Profit / Cost Price × 100",
+      "Loss% = Loss / Cost Price × 100",
+      "Discount = Marked Price - Selling Price",
+      "Discount% = Discount / Marked Price × 100"
     ]
   },
 
   {
-    id: 'formula-si-ci',
-    category: 'formula-sheets',
-    title: 'Simple & Compound Interest',
-    tags: ['quant', 'interest', 'ssc', 'banking', 'railway'],
+    id: "formula-interest",
+    category: "formula-sheets",
+    title: "Simple & Compound Interest",
+    tags: ["interest", "si", "ci", "ssc", "banking"],
     premium: false,
     content: [
-      'Simple Interest = (P × R × T) / 100',
-      'Amount under SI = P + SI',
-      'Compound Amount = P(1 + R/100)^T',
-      'Compound Interest = Amount − Principal',
-      'For two years, CI − SI = P(R/100)^2',
-      'Always keep rate and time in compatible units.'
+      "Simple Interest = P × R × T / 100",
+      "Amount under SI = Principal + Simple Interest",
+      "Compound Amount = P(1 + R/100)^T",
+      "Compound Interest = Amount - Principal"
     ]
   },
 
   {
-    id: 'formula-average',
-    category: 'formula-sheets',
-    title: 'Average Quick Formulas',
-    tags: ['quant', 'average', 'ssc', 'banking'],
+    id: "formula-average",
+    category: "formula-sheets",
+    title: "Average Formulas",
+    tags: ["average", "quant", "ssc", "banking"],
     premium: false,
     content: [
-      'Average = Sum of observations / Number of observations',
-      'Sum = Average × Number of observations',
-      'Combined average = Total combined sum / Total observations',
-      'If one value changes, change in average = Change in total / Number of observations',
-      'Weighted average uses the corresponding weights.'
+      "Average = Sum of observations / Number of observations",
+      "Sum = Average × Number of observations",
+      "Combined Average = Total Sum / Total Number of observations"
     ]
   },
 
   {
-    id: 'formula-time-work',
-    category: 'formula-sheets',
-    title: 'Time & Work',
-    tags: ['quant', 'time', 'work', 'ssc', 'railway'],
+    id: "formula-time-work",
+    category: "formula-sheets",
+    title: "Time & Work",
+    tags: ["time", "work", "quant", "ssc", "railway"],
     premium: false,
     content: [
-      'Work = Rate × Time',
-      'If A completes work in x days, A’s one-day work = 1/x',
-      'Combined rate = Sum of individual rates',
-      'Time = Total work / Combined rate',
-      'For efficiency comparison, work rate is directly proportional to efficiency.'
+      "If A completes a work in x days, A's one-day work is 1/x.",
+      "Combined work rate is the sum of individual work rates.",
+      "Time = Work / Rate.",
+      "Efficiency and work rate are directly proportional."
     ]
   },
 
   {
-    id: 'formula-time-distance',
-    category: 'formula-sheets',
-    title: 'Time, Speed & Distance',
-    tags: ['quant', 'speed', 'distance', 'ssc', 'nda'],
+    id: "formula-speed",
+    category: "formula-sheets",
+    title: "Time, Speed & Distance",
+    tags: ["speed", "distance", "time", "ssc", "nda", "railway"],
     premium: false,
     content: [
-      'Speed = Distance / Time',
-      'Distance = Speed × Time',
-      'Time = Distance / Speed',
-      'Average speed = Total distance / Total time',
-      'Relative speed in opposite directions = Sum of speeds',
-      'Relative speed in same direction = Difference of speeds',
-      '1 m/s = 18/5 km/h'
+      "Speed = Distance / Time",
+      "Distance = Speed × Time",
+      "Time = Distance / Speed",
+      "Average Speed = Total Distance / Total Time",
+      "1 m/s = 18/5 km/h"
     ]
   },
 
   {
-    id: 'formula-mensuration',
-    category: 'formula-sheets',
-    title: 'Mensuration Formulas 2D & 3D',
-    tags: ['geometry', 'mensuration', 'ssc', 'nda', 'railway'],
+    id: "formula-mensuration",
+    category: "formula-sheets",
+    title: "Mensuration Formula Sheet",
+    tags: ["mensuration", "geometry", "ssc", "nda", "railway"],
     premium: false,
     content: [
-      'Rectangle area = length × breadth',
-      'Square area = side²',
-      'Triangle area = 1/2 × base × height',
-      'Circle area = πr²',
-      'Circle circumference = 2πr',
-      'Cuboid volume = l × b × h',
-      'Cylinder volume = πr²h',
-      'Sphere volume = 4πr³/3'
+      "Rectangle Area = Length × Breadth",
+      "Square Area = Side²",
+      "Triangle Area = 1/2 × Base × Height",
+      "Circle Area = πr²",
+      "Circle Circumference = 2πr",
+      "Cuboid Volume = l × b × h",
+      "Cylinder Volume = πr²h",
+      "Sphere Volume = 4πr³/3"
     ]
   },
 
   {
-    id: 'formula-trigonometry',
-    category: 'formula-sheets',
-    title: 'Trigonometry Quick Reference',
-    tags: ['trigonometry', 'jee', 'neet', 'nda', 'cds'],
+    id: "formula-trigonometry",
+    category: "formula-sheets",
+    title: "Trigonometry Quick Revision",
+    tags: ["trigonometry", "jee", "nda", "cds"],
     premium: false,
     content: [
-      'sin²θ + cos²θ = 1',
-      '1 + tan²θ = sec²θ',
-      '1 + cot²θ = cosec²θ',
-      'sin(90° − θ) = cosθ',
-      'cos(90° − θ) = sinθ',
-      'sin 2θ = 2sinθcosθ',
-      'cos 2θ = cos²θ − sin²θ'
+      "sin²θ + cos²θ = 1",
+      "1 + tan²θ = sec²θ",
+      "1 + cot²θ = cosec²θ",
+      "sin 2θ = 2sinθcosθ",
+      "cos 2θ = cos²θ - sin²θ"
     ]
   },
 
   {
-    id: 'formula-algebra',
-    category: 'formula-sheets',
-    title: 'Algebraic Identities',
-    tags: ['algebra', 'jee', 'nda', 'cds', 'ssc'],
+    id: "formula-algebra",
+    category: "formula-sheets",
+    title: "Algebraic Identities",
+    tags: ["algebra", "jee", "nda", "ssc"],
     premium: false,
     content: [
-      '(a+b)² = a² + 2ab + b²',
-      '(a−b)² = a² − 2ab + b²',
-      'a²−b² = (a−b)(a+b)',
-      '(a+b)³ = a³ + 3a²b + 3ab² + b³',
-      '(a−b)³ = a³ − 3a²b + 3ab² − b³',
-      'a³+b³ = (a+b)(a²−ab+b²)',
-      'a³−b³ = (a−b)(a²+ab+b²)'
+      "(a+b)² = a² + 2ab + b²",
+      "(a-b)² = a² - 2ab + b²",
+      "a²-b² = (a-b)(a+b)",
+      "(a+b)³ = a³ + 3a²b + 3ab² + b³",
+      "(a-b)³ = a³ - 3a²b + 3ab² - b³"
     ]
   },
 
-  // =========================================================
+  // ==============================
   // REVISION NOTES
-  // =========================================================
+  // ==============================
 
   {
-    id: 'notes-indian-polity',
-    category: 'revision-notes',
-    title: 'Indian Polity Quick Revision',
-    tags: ['polity', 'upsc', 'ssc', 'nda', 'cds', 'cuet'],
+    id: "revision-polity",
+    category: "revision-notes",
+    title: "Indian Polity Quick Revision",
+    tags: ["polity", "upsc", "ssc", "nda", "cds", "cuet"],
     premium: false,
     content: [
-      'The Constitution of India came into force on 26 January 1950.',
-      'Fundamental Rights are mainly covered under Articles 12–35.',
-      'Directive Principles of State Policy are covered under Articles 36–51.',
-      'Parliament consists of Lok Sabha and Rajya Sabha.',
-      'The President is the constitutional head of the Union.',
-      'The Prime Minister heads the Council of Ministers.',
-      'The Supreme Court is the highest judicial authority of India.'
+      "The Constitution of India came into force on 26 January 1950.",
+      "Fundamental Rights are mainly covered under Articles 12–35.",
+      "Directive Principles are covered under Articles 36–51.",
+      "Parliament consists of Lok Sabha and Rajya Sabha.",
+      "The President is the constitutional head of the Union.",
+      "The Prime Minister heads the Council of Ministers.",
+      "The Supreme Court is the highest court of India."
     ]
   },
 
   {
-    id: 'notes-modern-history',
-    category: 'revision-notes',
-    title: 'Modern Indian History Timeline',
-    tags: ['history', 'upsc', 'ssc', 'nda', 'cds'],
+    id: "revision-history",
+    category: "revision-notes",
+    title: "Modern Indian History",
+    tags: ["history", "upsc", "ssc", "nda", "cds"],
     premium: false,
     content: [
-      '1857 – Revolt of 1857',
-      '1885 – Formation of Indian National Congress',
-      '1905 – Partition of Bengal',
-      '1919 – Jallianwala Bagh incident',
-      '1920 – Non-Cooperation Movement',
-      '1930 – Civil Disobedience Movement and Dandi March',
-      '1942 – Quit India Movement',
-      '1947 – Independence of India'
+      "1857 - Revolt of 1857",
+      "1885 - Formation of Indian National Congress",
+      "1905 - Partition of Bengal",
+      "1919 - Jallianwala Bagh",
+      "1920 - Non-Cooperation Movement",
+      "1930 - Civil Disobedience Movement",
+      "1942 - Quit India Movement",
+      "1947 - Independence"
     ]
   },
 
   {
-    id: 'notes-ancient-medieval',
-    category: 'revision-notes',
-    title: 'Ancient & Medieval India Quick Revision',
-    tags: ['history', 'ancient', 'medieval', 'upsc', 'ssc'],
+    id: "revision-geography",
+    category: "revision-notes",
+    title: "Indian Geography Quick Revision",
+    tags: ["geography", "upsc", "ssc", "nda", "cds"],
     premium: false,
     content: [
-      'Indus Valley Civilization is known for planned urban settlements.',
-      'Vedic literature is an important source for early Indian history.',
-      'Mauryan Empire reached major expansion under Ashoka.',
-      'Gupta period is associated with major developments in science, mathematics and literature.',
-      'Delhi Sultanate preceded the Mughal Empire in northern India.',
-      'Akbar developed administrative and political systems that shaped the Mughal state.'
+      "The Himalayas form India's major northern mountain system.",
+      "The Ganga-Brahmaputra system forms a major river basin.",
+      "The Peninsular Plateau is one of India's oldest geological regions.",
+      "Western Ghats and Eastern Ghats are major peninsular hill systems.",
+      "India has a tropical monsoon climate."
     ]
   },
 
   {
-    id: 'notes-indian-geography',
-    category: 'revision-notes',
-    title: 'Indian Geography Quick Revision',
-    tags: ['geography', 'upsc', 'ssc', 'nda', 'cds', 'cuet'],
+    id: "revision-economy",
+    category: "revision-notes",
+    title: "Indian Economy Basics",
+    tags: ["economy", "upsc", "ssc", "banking", "cuet"],
     premium: false,
     content: [
-      'The Himalayas form the major northern mountain system of India.',
-      'The Ganga-Brahmaputra system forms a major river basin.',
-      'The Peninsular Plateau is one of the oldest geological regions of India.',
-      'The Western Ghats and Eastern Ghats are major hill systems of peninsular India.',
-      'India has tropical monsoon climate with strong seasonal variation.',
-      'Black soil is especially associated with cotton cultivation.'
+      "GDP measures the value of final goods and services produced within an economy.",
+      "Inflation is a sustained increase in the general price level.",
+      "RBI is India's central banking institution.",
+      "Fiscal policy deals with government revenue and expenditure.",
+      "Monetary policy deals with money and credit conditions."
     ]
   },
 
   {
-    id: 'notes-indian-economy',
-    category: 'revision-notes',
-    title: 'Indian Economy Basics',
-    tags: ['economics', 'upsc', 'ssc', 'banking', 'cuet'],
+    id: "revision-science",
+    category: "revision-notes",
+    title: "General Science Revision",
+    tags: ["science", "ssc", "railway", "nda", "cds"],
     premium: false,
     content: [
-      'GDP measures the value of final goods and services produced within an economy.',
-      'Inflation refers to a sustained increase in the general price level.',
-      'RBI is India’s central banking institution.',
-      'Fiscal policy concerns government taxation and expenditure.',
-      'Monetary policy is conducted by the central bank.',
-      'Repo rate is an important monetary policy instrument.'
+      "Force is measured in newtons.",
+      "Work is measured in joules.",
+      "Power is the rate of doing work.",
+      "The cell is the basic unit of life.",
+      "DNA carries hereditary information.",
+      "The SI unit of electric current is ampere."
     ]
   },
 
   {
-    id: 'notes-general-science',
-    category: 'revision-notes',
-    title: 'General Science Quick Revision',
-    tags: ['science', 'ssc', 'railway', 'nda', 'cds'],
+    id: "revision-computer",
+    category: "revision-notes",
+    title: "Computer Awareness",
+    tags: ["computer", "ssc", "banking", "railway"],
     premium: false,
     content: [
-      'Force is measured in newtons.',
-      'Work is measured in joules.',
-      'Power is the rate of doing work.',
-      'The basic unit of life is the cell.',
-      'Photosynthesis converts light energy into chemical energy.',
-      'DNA carries hereditary information.',
-      'The SI unit of electric current is ampere.'
+      "CPU stands for Central Processing Unit.",
+      "RAM is volatile memory.",
+      "ROM is non-volatile memory.",
+      "LAN stands for Local Area Network.",
+      "WAN stands for Wide Area Network.",
+      "An operating system manages hardware and software resources."
     ]
   },
 
-  {
-    id: 'notes-computer-basics',
-    category: 'revision-notes',
-    title: 'Computer Awareness Basics',
-    tags: ['computer', 'ssc', 'banking', 'railway'],
-    premium: false,
-    content: [
-      'CPU stands for Central Processing Unit.',
-      'RAM is volatile memory.',
-      'ROM is non-volatile memory.',
-      'LAN stands for Local Area Network.',
-      'WAN stands for Wide Area Network.',
-      'HTTP is a web communication protocol.',
-      'Operating systems manage computer hardware and software resources.'
-    ]
-  },
-
-  // =========================================================
+  // ==============================
   // VOCABULARY
-  // =========================================================
+  // ==============================
 
   {
-    id: 'vocab-set-1',
-    category: 'vocabulary',
-    title: 'High-Frequency Vocabulary — Set 1',
-    tags: ['english', 'vocabulary', 'ssc', 'nda', 'cds'],
+    id: "vocabulary-basic",
+    category: "vocabulary",
+    title: "High Frequency Vocabulary",
+    tags: ["english", "vocabulary", "ssc", "nda", "cds", "banking"],
     premium: false,
     content: [
-      'Abate — to reduce',
-      'Candid — truthful and straightforward',
-      'Diligent — hardworking and careful',
-      'Eloquent — fluent and persuasive',
-      'Frugal — economical',
-      'Hostile — unfriendly',
-      'Impeccable — flawless',
-      'Lucid — clear and easy to understand'
+      "Abate - to reduce",
+      "Candid - truthful and straightforward",
+      "Diligent - hardworking and careful",
+      "Eloquent - fluent and persuasive",
+      "Frugal - economical",
+      "Hostile - unfriendly",
+      "Impeccable - flawless",
+      "Lucid - clear and understandable",
+      "Meticulous - very careful",
+      "Pragmatic - practical",
+      "Reluctant - unwilling",
+      "Vigilant - watchful"
     ]
   },
 
   {
-    id: 'vocab-set-2',
-    category: 'vocabulary',
-    title: 'High-Frequency Vocabulary — Set 2',
-    tags: ['english', 'vocabulary', 'ssc', 'banking'],
+    id: "vocabulary-idioms",
+    category: "vocabulary",
+    title: "Important Idioms & Phrases",
+    tags: ["idioms", "english", "ssc", "nda", "cds"],
     premium: false,
     content: [
-      'Meticulous — very careful about details',
-      'Novice — beginner',
-      'Obsolete — no longer used',
-      'Pragmatic — practical',
-      'Reluctant — unwilling',
-      'Scarce — insufficient or rare',
-      'Vigilant — watchful',
-      'Versatile — capable of many different things'
+      "Break the ice - start a conversation",
+      "Hit the nail on the head - describe something exactly",
+      "Once in a blue moon - very rarely",
+      "Under the weather - feeling unwell",
+      "Blessing in disguise - something good that initially appears bad",
+      "The ball is in your court - it is your decision",
+      "Cut corners - take shortcuts"
     ]
   },
 
-  {
-    id: 'vocab-idioms',
-    category: 'vocabulary',
-    title: 'Important Idioms & Phrases',
-    tags: ['english', 'idioms', 'ssc', 'nda', 'cds'],
-    premium: false,
-    content: [
-      'Break the ice — start a conversation',
-      'Hit the nail on the head — describe something exactly',
-      'Once in a blue moon — very rarely',
-      'Under the weather — feeling unwell',
-      'A blessing in disguise — something good that initially appears bad',
-      'The ball is in your court — it is your decision',
-      'Cut corners — take shortcuts'
-    ]
-  },
-
-  // =========================================================
+  // ==============================
   // PRACTICE MATERIAL
-  // =========================================================
+  // ==============================
 
   {
-    id: 'practice-quant',
-    category: 'practice-material',
-    title: 'Quantitative Aptitude Practice',
-    tags: ['quant', 'ssc', 'banking', 'railway'],
+    id: "practice-quant",
+    category: "practice-material",
+    title: "Quantitative Aptitude Practice",
+    tags: ["quant", "ssc", "banking", "railway"],
     premium: false,
     content: [
-      'Practice percentages, ratio, average and profit-loss.',
-      'Add time and work, time-speed-distance and simple interest.',
-      'Solve questions under a fixed time limit.',
-      'Record incorrect questions separately.',
-      'Reattempt mistakes after 24 hours.'
+      "Practice percentage and ratio questions.",
+      "Practice average and profit-loss questions.",
+      "Practice time-work and time-distance.",
+      "Practice simple and compound interest.",
+      "Record mistakes and reattempt them."
     ],
-    linkTo: '/quiz?subject=quant'
+    linkTo: "/quiz"
   },
 
   {
-    id: 'practice-reasoning',
-    category: 'practice-material',
-    title: 'Reasoning Practice',
-    tags: ['reasoning', 'ssc', 'banking', 'railway'],
+    id: "practice-reasoning",
+    category: "practice-material",
+    title: "Reasoning Practice",
+    tags: ["reasoning", "ssc", "banking", "railway"],
     premium: false,
     content: [
-      'Practice analogy and classification.',
-      'Practice number and alphabet series.',
-      'Practice coding-decoding.',
-      'Practice blood relations and directions.',
-      'Practice syllogism and logical deductions.'
+      "Analogy",
+      "Classification",
+      "Number series",
+      "Coding-decoding",
+      "Blood relations",
+      "Directions",
+      "Syllogism",
+      "Puzzles"
     ],
-    linkTo: '/quiz?subject=reasoning'
+    linkTo: "/quiz"
   },
 
   {
-    id: 'practice-english',
-    category: 'practice-material',
-    title: 'English Practice',
-    tags: ['english', 'ssc', 'nda', 'cds', 'banking'],
+    id: "practice-english",
+    category: "practice-material",
+    title: "English Practice",
+    tags: ["english", "ssc", "nda", "cds", "banking"],
     premium: false,
     content: [
-      'Practice error spotting.',
-      'Practice sentence improvement.',
-      'Practice cloze tests.',
-      'Practice reading comprehension.',
-      'Revise vocabulary and idioms regularly.',
-      'Maintain an error notebook.'
+      "Error spotting",
+      "Sentence improvement",
+      "Cloze test",
+      "Reading comprehension",
+      "Vocabulary",
+      "Idioms and phrases"
     ],
-    linkTo: '/quiz?subject=english'
+    linkTo: "/quiz"
   },
 
   {
-    id: 'practice-gk',
-    category: 'practice-material',
-    title: 'General Knowledge Practice',
-    tags: ['gk', 'ssc', 'nda', 'cds', 'railway'],
+    id: "practice-gk",
+    category: "practice-material",
+    title: "General Knowledge Practice",
+    tags: ["gk", "ssc", "nda", "cds", "railway"],
     premium: false,
     content: [
-      'Revise history, geography, polity and economics.',
-      'Practice general science questions.',
-      'Revise important government schemes and institutions.',
-      'Track current affairs separately.',
-      'Use previous-year questions to identify repeated areas.'
+      "History",
+      "Geography",
+      "Polity",
+      "Economics",
+      "General Science",
+      "Static GK",
+      "Current Affairs"
     ],
-    linkTo: '/quiz?subject=gk'
+    linkTo: "/quiz"
   },
 
-  // =========================================================
-  // STUDY RESOURCES / EXAM SOURCES
-  // =========================================================
+  // ==============================
+  // OFFICIAL SOURCES
+  // ==============================
 
   {
-    id: 'source-ncert',
-    category: 'study-pdfs',
-    title: 'NCERT Textbooks — Classes 1 to 12',
-    tags: ['ncert', 'jee', 'neet', 'upsc', 'ssc', 'cuet'],
+    id: "official-upsc",
+    category: "official-sources",
+    title: "UPSC Official Website",
+    tags: ["upsc", "cse", "nda", "cds", "ias"],
     premium: false,
     content: [
-      'Official source: NCERT textbooks.',
-      'Useful for school fundamentals and competitive-exam foundation.',
-      'Especially important for JEE, NEET, UPSC, CUET and general studies.',
-      'Use the latest officially available editions where applicable.'
-    ]
-  },
-
-  {
-    id: 'source-jee-main',
-    category: 'study-pdfs',
-    title: 'JEE Main — Official Resources',
-    tags: ['jee', 'jee-main', 'engineering'],
-    premium: false,
-    content: [
-      'Official source: National Testing Agency JEE Main portal.',
-      'Find official syllabus and examination information.',
-      'Use official question papers and answer keys when available.',
-      'Check official notices before relying on third-party information.'
-    ]
+      "Official UPSC portal for notifications, examination information, syllabus and other official updates.",
+      "Always verify dates and eligibility from the current notification."
+    ],
+    linkTo: "https://upsc.gov.in/"
   },
 
   {
-    id: 'source-jee-advanced',
-    category: 'study-pdfs',
-    title: 'JEE Advanced — Official Resources',
-    tags: ['jee', 'jee-advanced', 'engineering'],
+    id: "official-ssc",
+    category: "official-sources",
+    title: "SSC Official Website",
+    tags: ["ssc", "cgl", "chsl", "mts", "gd"],
     premium: false,
     content: [
-      'Official source: JEE Advanced portal.',
-      'Use official syllabus and examination information.',
-      'Previous-year question papers are valuable practice material.',
-      'Always verify examination updates from the official portal.'
-    ]
+      "Official Staff Selection Commission portal.",
+      "Use it for notifications, examination information and official updates."
+    ],
+    linkTo: "https://ssc.gov.in/"
   },
 
   {
-    id: 'source-neet',
-    category: 'study-pdfs',
-    title: 'NEET UG — Official Resources',
-    tags: ['neet', 'medical', 'nmc', 'nta'],
+    id: "official-jee-main",
+    category: "official-sources",
+    title: "JEE Main Official Website",
+    tags: ["jee", "jee-main", "engineering"],
     premium: false,
     content: [
-      'Official source: National Testing Agency NEET portal.',
-      'Use the official syllabus and notices.',
-      'Use official answer keys and examination documents when released.',
-      'NCERT Biology, Chemistry and Physics form an important foundation.'
-    ]
+      "Official JEE Main portal.",
+      "Use it for current notices, information bulletins and examination updates."
+    ],
+    linkTo: "https://jeemain.nta.nic.in/"
   },
 
   {
-    id: 'source-upsc',
-    category: 'study-pdfs',
-    title: 'UPSC — Official Resources',
-    tags: ['upsc', 'civil-services', 'ias', 'ips'],
+    id: "official-jee-advanced",
+    category: "official-sources",
+    title: "JEE Advanced Official Website",
+    tags: ["jee", "jee-advanced", "iit"],
     premium: false,
     content: [
-      'Official source: Union Public Service Commission.',
-      'Use official examination notifications.',
-      'Use official syllabus and previous-year question papers.',
-      'Build preparation around the official syllabus rather than random topic lists.'
-    ]
+      "Official JEE Advanced portal.",
+      "Use it for syllabus, examination information and official papers."
+    ],
+    linkTo: "https://jeeadv.ac.in/"
   },
 
   {
-    id: 'source-ssc',
-    category: 'study-pdfs',
-    title: 'SSC CGL & CHSL — Official Resources',
-    tags: ['ssc', 'cgl', 'chsl'],
+    id: "official-neet",
+    category: "official-sources",
+    title: "NEET UG Official Website",
+    tags: ["neet", "medical", "nta"],
     premium: false,
     content: [
-      'Official source: Staff Selection Commission.',
-      'Check official notifications and examination calendars.',
-      'Use official syllabus and notices.',
-      'Practice previous-year questions for pattern familiarity.'
-    ]
+      "Official NEET UG portal.",
+      "Use it for current information, notices and examination documents."
+    ],
+    linkTo: "https://neet.nta.nic.in/"
   },
 
   {
-    id: 'source-nda-cds',
-    category: 'study-pdfs',
-    title: 'NDA & CDS — Official Resources',
-    tags: ['nda', 'cds', 'defence', 'upsc'],
+    id: "official-cuet",
+    category: "official-sources",
+    title: "CUET Official Website",
+    tags: ["cuet", "nta", "university"],
     premium: false,
     content: [
-      'Official source: Union Public Service Commission.',
-      'Use official notifications and syllabus.',
-      'Practice previous-year papers.',
-      'For NDA, focus on Mathematics and General Ability Test.',
-      'For CDS, focus on English, General Knowledge and Mathematics where applicable.'
-    ]
+      "Official CUET portal.",
+      "Use it for current information, notices and examination updates."
+    ],
+    linkTo: "https://cuet.nta.nic.in/"
   },
 
   {
-    id: 'source-railway',
-    category: 'study-pdfs',
-    title: 'Railway Exams — Official Resources',
-    tags: ['railway', 'rrb', 'ntpc', 'group-d'],
+    id: "official-ugc-net",
+    category: "official-sources",
+    title: "UGC NET Official Website",
+    tags: ["ugc-net", "nta", "research", "teaching"],
     premium: false,
     content: [
-      'Official source: Railway Recruitment Boards.',
-      'Check the relevant regional RRB portal.',
-      'Use official notifications, syllabus and exam notices.',
-      'Common preparation areas include mathematics, reasoning and general awareness.'
-    ]
+      "Official UGC NET portal.",
+      "Use it for examination notices and current information."
+    ],
+    linkTo: "https://ugcnet.nta.nic.in/"
   },
 
   {
-    id: 'source-banking',
-    category: 'study-pdfs',
-    title: 'Banking Exams — Official Resources',
-    tags: ['banking', 'ibps', 'sbi', 'rbi'],
+    id: "official-ctet",
+    category: "official-sources",
+    title: "CTET Official Website",
+    tags: ["ctet", "teaching", "education"],
     premium: false,
     content: [
-      'Official sources include IBPS, SBI and RBI.',
-      'Check the individual examination notification for the current pattern.',
-      'Practice quantitative aptitude, reasoning and English.',
-      'Add banking awareness and current affairs where required.'
-    ]
+      "Official CTET portal.",
+      "Use it for current notifications, syllabus and examination information."
+    ],
+    linkTo: "https://ctet.nic.in/"
   },
 
   {
-    id: 'source-cuet',
-    category: 'study-pdfs',
-    title: 'CUET UG — Official Resources',
-    tags: ['cuet', 'university', 'nta'],
+    id: "official-ibps",
+    category: "official-sources",
+    title: "IBPS Official Website",
+    tags: ["ibps", "banking", "po", "clerk"],
     premium: false,
     content: [
-      'Official source: National Testing Agency.',
-      'Check the current subject list and syllabus.',
-      'Use official examination notices and information bulletins.',
-      'NCERT-based preparation is useful for many domain subjects.'
-    ]
+      "Official IBPS recruitment portal.",
+      "Use it for banking recruitment notifications and examination information."
+    ],
+    linkTo: "https://www.ibps.in/"
   },
 
   {
-    id: 'source-ugc-net',
-    category: 'study-pdfs',
-    title: 'UGC NET & CSIR NET — Official Resources',
-    tags: ['ugc-net', 'csir-net', 'nta', 'research'],
+    id: "official-sbi",
+    category: "official-sources",
+    title: "SBI Careers",
+    tags: ["sbi", "banking", "po", "clerk"],
     premium: false,
     content: [
-      'Official source: National Testing Agency.',
-      'Check the official subject-wise syllabus.',
-      'Use previous-year papers for exam familiarity.',
-      'Prepare Paper 1 teaching/research aptitude where applicable.'
-    ]
+      "Official State Bank of India careers portal.",
+      "Use it for SBI recruitment notifications."
+    ],
+    linkTo: "https://sbi.co.in/web/careers"
   },
 
   {
-    id: 'source-ctet',
-    category: 'study-pdfs',
-    title: 'CTET — Official Resources',
-    tags: ['ctet', 'teaching', 'education'],
+    id: "official-rrb",
+    category: "official-sources",
+    title: "Railway Recruitment",
+    tags: ["rrb", "railway", "ntpc", "group-d"],
     premium: false,
     content: [
-      'Official source: Central Teacher Eligibility Test portal.',
-      'Check the current information bulletin.',
-      'Use the official syllabus and previous-year papers.',
-      'Child Development and Pedagogy is an important preparation area.'
-    ]
+      "Use the relevant official Railway Recruitment Board regional portal.",
+      "Always verify recruitment information from the official notification."
+    ],
+    linkTo: "https://indianrailways.gov.in/"
   },
 
   {
-    id: 'source-cat',
-    category: 'study-pdfs',
-    title: 'CAT — Official & Preparation Resources',
-    tags: ['cat', 'mba', 'management'],
+    id: "official-cat",
+    category: "official-sources",
+    title: "CAT Official Website",
+    tags: ["cat", "mba", "management", "iim"],
     premium: false,
     content: [
-      'Official source: the current CAT examination portal.',
-      'Preparation areas include VARC, DILR and Quantitative Ability.',
-      'Use official examination information for the latest pattern.',
-      'Practice timed sectional tests regularly.'
-    ]
+      "Official CAT examination portal.",
+      "Use it for current examination information and notices."
+    ],
+    linkTo: "https://iimcat.ac.in/"
+  },
+
+  // ==============================
+  // FREE LEARNING
+  // ==============================
+
+  {
+    id: "free-ncert",
+    category: "free-learning",
+    title: "NCERT Textbooks",
+    tags: ["ncert", "books", "jee", "neet", "upsc", "cuet"],
+    premium: false,
+    content: [
+      "Official NCERT textbooks are available online.",
+      "Useful for school fundamentals and competitive examination preparation."
+    ],
+    linkTo: "https://ncert.nic.in/textbook.php"
   },
 
   {
-    id: 'source-state-psc',
-    category: 'study-pdfs',
-    title: 'State PSC Examination Resources',
-    tags: ['psc', 'state-psc', 'government-jobs'],
+    id: "free-diksha",
+    category: "free-learning",
+    title: "DIKSHA",
+    tags: ["diksha", "education", "school", "free"],
     premium: false,
     content: [
-      'Use the official Public Service Commission website of the relevant state.',
-      'Download the current notification and syllabus.',
-      'Check state-specific history, geography, polity and current affairs.',
-      'Always verify eligibility and dates from the official notification.'
-    ]
-  },
-
-  // =========================================================
-  // FREE LEARNING PLATFORMS
-  // =========================================================
-
-  {
-    id: 'free-swayam',
-    category: 'study-pdfs',
-    title: 'SWAYAM — Free Online Courses',
-    tags: ['free', 'courses', 'college', 'skills'],
-    premium: false,
-    content: [
-      'Government-supported online learning platform.',
-      'Courses are available across many academic and skill areas.',
-      'Useful for strengthening college subjects and additional skills.',
-      'Some certification/examination options may have separate conditions.'
-    ]
+      "Government-supported digital learning platform.",
+      "Provides educational resources for students and teachers."
+    ],
+    linkTo: "https://diksha.gov.in/"
   },
 
   {
-    id: 'free-nptel',
-    category: 'study-pdfs',
-    title: 'NPTEL — Engineering & Science Learning',
-    tags: ['free', 'nptel', 'engineering', 'science'],
+    id: "free-swayam",
+    category: "free-learning",
+    title: "SWAYAM",
+    tags: ["swayam", "courses", "free", "university"],
     premium: false,
     content: [
-      'Courses from IITs and IISc are available through NPTEL.',
-      'Useful for engineering, mathematics, science and technology.',
-      'Course availability and certification rules vary by course.'
-    ]
+      "Free online courses from Indian institutions and universities.",
+      "Useful for academic and skill development."
+    ],
+    linkTo: "https://swayam.gov.in/"
   },
 
   {
-    id: 'free-khan-academy',
-    category: 'study-pdfs',
-    title: 'Khan Academy — Free Concept Learning',
-    tags: ['free', 'maths', 'science', 'learning'],
+    id: "free-nptel",
+    category: "free-learning",
+    title: "NPTEL",
+    tags: ["nptel", "iit", "engineering", "science"],
     premium: false,
     content: [
-      'Free educational lessons and practice.',
-      'Useful for mathematics, science and foundational concepts.',
-      'Best used for understanding concepts before exam-specific practice.'
-    ]
+      "Courses and lectures from IITs and IISc.",
+      "Useful for engineering, science and technology."
+    ],
+    linkTo: "https://nptel.ac.in/"
   },
 
   {
-    id: 'free-diksha',
-    category: 'study-pdfs',
-    title: 'DIKSHA — Government Learning Platform',
-    tags: ['free', 'diksha', 'school', 'ncert'],
+    id: "free-khan",
+    category: "free-learning",
+    title: "Khan Academy",
+    tags: ["maths", "science", "free", "practice"],
     premium: false,
     content: [
-      'Government-supported digital learning platform.',
-      'Contains educational resources for students and teachers.',
-      'Useful for school-level learning and curriculum-linked resources.'
-    ]
+      "Free concept-learning lessons and practice.",
+      "Useful especially for mathematics and science fundamentals."
+    ],
+    linkTo: "https://www.khanacademy.org/"
   },
 
-  // =========================================================
+  // ==============================
   // CHECKLISTS
-  // =========================================================
+  // ==============================
 
   {
-    id: 'checklist-exam-day',
-    category: 'checklists',
-    title: 'Exam Day Checklist',
-    tags: ['general', 'exam'],
+    id: "checklist-daily",
+    category: "checklists",
+    title: "Daily Study Checklist",
+    tags: ["study", "routine", "planning"],
     premium: false,
     content: [
-      '☐ Check admit card requirements',
-      '☐ Carry valid identification if required',
-      '☐ Check reporting time',
-      '☐ Check permitted stationery/items',
-      '☐ Read centre instructions before leaving',
-      '☐ Reach the examination centre with sufficient time'
+      "Revise yesterday's topic",
+      "Complete today's main topic",
+      "Solve practice questions",
+      "Review mistakes",
+      "Revise vocabulary/current affairs",
+      "Mark weak topics"
     ]
   },
 
   {
-    id: 'checklist-daily-study',
-    category: 'checklists',
-    title: 'Daily Study Checklist',
-    tags: ['planning', 'study'],
+    id: "checklist-mock",
+    category: "checklists",
+    title: "Mock Test Analysis Checklist",
+    tags: ["mock", "test", "analysis"],
     premium: false,
     content: [
-      '☐ Revise yesterday’s topics',
-      '☐ Complete today’s main topic',
-      '☐ Solve practice questions',
-      '☐ Review mistakes',
-      '☐ Revise vocabulary/current affairs',
-      '☐ Mark weak topics for later revision'
+      "Record your score",
+      "Check attempted questions",
+      "Identify silly mistakes",
+      "Identify concept mistakes",
+      "Check time management",
+      "Reattempt incorrect questions",
+      "Add weak topics to revision"
     ]
   },
 
   {
-    id: 'checklist-mock-test',
-    category: 'checklists',
-    title: 'Mock Test Analysis Checklist',
-    tags: ['mock', 'test', 'analysis'],
+    id: "checklist-exam-day",
+    category: "checklists",
+    title: "Exam Day Checklist",
+    tags: ["exam", "admit-card", "preparation"],
     premium: false,
     content: [
-      '☐ Record total score',
-      '☐ Record attempted questions',
-      '☐ Identify silly mistakes',
-      '☐ Identify concept mistakes',
-      '☐ Identify time-management problems',
-      '☐ Reattempt incorrect questions',
-      '☐ Add weak topics to revision list'
-    ]
-  },
-
-  {
-    id: 'checklist-application',
-    category: 'checklists',
-    title: 'Exam Application Checklist',
-    tags: ['application', 'exam'],
-    premium: false,
-    content: [
-      '☐ Check eligibility',
-      '☐ Read official notification',
-      '☐ Prepare required documents',
-      '☐ Check photograph/signature specifications',
-      '☐ Verify personal details before final submission',
-      '☐ Save application/confirmation details'
+      "Check the official admit-card instructions",
+      "Carry required identification",
+      "Check reporting time",
+      "Check permitted items",
+      "Plan your route",
+      "Reach the centre with enough time"
     ]
   }
-]
+];
 
-// =========================================================
+// =====================================================
 // HELPER FUNCTIONS
-// =========================================================
+// =====================================================
 
 export const getResourcesByCategory = (categoryId) =>
-  resources.filter((resource) => resource.category === categoryId)
+  resources.filter((resource) => resource.category === categoryId);
 
 export const searchResources = (query) => {
-  const q = query.trim().toLowerCase()
+  const q = query.trim().toLowerCase();
 
-  if (!q) return resources
+  if (!q) return resources;
 
   return resources.filter((resource) => {
-    const titleMatch = resource.title.toLowerCase().includes(q)
+    const titleMatch = resource.title
+      .toLowerCase()
+      .includes(q);
 
-    const tagMatch = resource.tags.some((tag) =>
+    const tagMatch = resource.tags?.some((tag) =>
       tag.toLowerCase().includes(q)
-    )
+    );
 
-    const contentMatch = resource.content.some((line) =>
-      line.toLowerCase().includes(q)
-    )
+    const contentMatch = resource.content?.some((item) =>
+      item.toLowerCase().includes(q)
+    );
 
-    return titleMatch || tagMatch || contentMatch
-  })
-}
+    return titleMatch || tagMatch || contentMatch;
+  });
+};
+
+export const getResourceById = (id) =>
+  resources.find((resource) => resource.id === id);
