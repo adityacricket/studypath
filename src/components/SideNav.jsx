@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const navItems = [
   { to: '/', label: 'Home', icon: 'fa-house' },
+  { to: '/coach', label: 'Study Coach', icon: 'fa-compass' },
   { to: '/exams', label: 'Exam Hub', icon: 'fa-building-columns' },
   { to: '/tools', label: 'Study Tools', icon: 'fa-calculator' },
   { to: '/quiz', label: 'Quiz', icon: 'fa-brain' },
@@ -23,6 +24,7 @@ export default function SideNav() {
         </div>
         <span className="hidden lg:block font-extrabold text-lg text-slate-800 dark:text-slate-100">StudyPath</span>
       </div>
+
       <nav className="flex-1 flex flex-col gap-1 px-2 overflow-y-auto">
         {navItems.map((item) => (
           <NavLink
