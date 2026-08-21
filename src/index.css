@@ -72,3 +72,4 @@ body {
 .premium-tag {
   @apply badge bg-gradient-to-r from-indigo-500 to-purple-500 text-white;
 }
+@media (min-width: 1024px) { .page-container { padding-left: 14rem !important; } }
