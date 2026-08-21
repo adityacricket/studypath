@@ -21,6 +21,8 @@ import Resources from './pages/Resources.jsx'
 import ResourceViewer from './pages/ResourceViewer.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Profile from './pages/Profile.jsx'
+import Account from './pages/Account.jsx'
+import Premium from './pages/Premium.jsx'
 import Settings from './pages/Settings.jsx'
 import SearchPage from './pages/SearchPage.jsx'
 import NotFound from './pages/NotFound.jsx'
@@ -56,6 +58,8 @@ export default function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/premium" element={<Premium />} />
           <Route path="/settings" element={<Settings />} />
 
           <Route path="/search" element={<SearchPage />} />
