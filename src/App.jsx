@@ -28,6 +28,7 @@ import Account from './pages/Account.jsx'
 import Premium from './pages/Premium.jsx'
 import Settings from './pages/Settings.jsx'
 import SearchPage from './pages/SearchPage.jsx'
+import SamplePapers from './pages/SamplePapers.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/quiz/play" element={<QuizPlay />} />
           <Route path="/quiz/result" element={<QuizResult />} />
 
+          <Route path="/sample-papers" element={<SamplePapers />} />
           <Route path="/planner" element={<Planner />} />
 
           <Route path="/careers" element={<Careers />} />
