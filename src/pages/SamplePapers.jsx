@@ -6,6 +6,7 @@ const papers = [
   { id: 'science-foundation-1', title: 'Science Foundation Sample Paper 1', subject: 'Science', questions: 15, duration: 30, level: 'Foundation', free: true },
   { id: 'english-foundation-1', title: 'English Foundation Sample Paper 1', subject: 'English', questions: 15, duration: 25, level: 'Foundation', free: true },
   { id: 'mixed-practice-1', title: 'Mixed Practice Sample Paper 1', subject: 'Mixed', questions: 20, duration: 35, level: 'Practice', free: true },
+  { id: 'upsc-prelims-02', title: 'UPSC CSE Prelims — GS Paper I Mock 02', subject: 'UPSC CSE', questions: 100, duration: 120, level: 'Prelims • 200 Marks', free: true },
 ]
 
 export default function SamplePapers() {
