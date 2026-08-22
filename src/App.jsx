@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import SideNav from './components/SideNav.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import Header from './components/Header.jsx'
+import ProjectChecklist from './components/ProjectChecklist.jsx'
 
 import Home from './pages/Home.jsx'
 import ExamHub from './pages/ExamHub.jsx'
@@ -36,6 +37,7 @@ export default function App() {
     <div className="min-h-screen">
       <SideNav />
       <Header />
+      <ProjectChecklist />
 
       <main className="page-container animate-fade-in">
         <Routes>
