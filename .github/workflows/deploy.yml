@@ -1,27 +1,29 @@
 name: Deploy StudyPath
-# Force a fresh GitHub Pages deployment of the current main branch.
 
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
+# One deployment pipeline owns the live site.
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: true
+  group: "studypath-pages"
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -38,13 +40,47 @@ jobs:
       - name: Create SPA fallback
         run: cp dist/index.html dist/404.html
 
-      - name: Verify build output
-        run: test -f dist/index.html && test -f dist/404.html
+      - name: Write build marker
+        run: |
+          printf '{"commit":"%s","builtAt":"%s"}\n' "$GITHUB_SHA" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > dist/build.json
+
+      - name: Verify expected build output
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/build.json
+          test -d dist/assets
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+
+      # Fallback for repositories whose Pages source is configured to the
+      # gh-pages branch rather than the GitHub Actions Pages environment.
+      - name: Publish static build to gh-pages fallback
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages || true
+
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git worktree add /tmp/studypath-gh-pages origin/gh-pages
+            rm -rf /tmp/studypath-gh-pages/* /tmp/studypath-gh-pages/.[!.]* /tmp/studypath-gh-pages/..?* 2>/dev/null || true
+          else
+            mkdir -p /tmp/studypath-gh-pages
+            git worktree add --detach /tmp/studypath-gh-pages HEAD
+            git -C /tmp/studypath-gh-pages checkout --orphan gh-pages
+            git -C /tmp/studypath-gh-pages rm -rf . 2>/dev/null || true
+          fi
+
+          cp -R dist/. /tmp/studypath-gh-pages/
+          touch /tmp/studypath-gh-pages/.nojekyll
+          git -C /tmp/studypath-gh-pages add -A
+          git -C /tmp/studypath-gh-pages commit -m "Deploy StudyPath ${GITHUB_SHA}" || true
+          git -C /tmp/studypath-gh-pages push origin HEAD:gh-pages --force
 
   deploy:
     environment:
