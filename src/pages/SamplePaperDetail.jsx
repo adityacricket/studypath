@@ -1,27 +1,11 @@
 import React from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { questionBank, shuffleArray } from '../data/quizzes.js'
-
-const papers = {
-  'maths-foundation-1': { title: 'Mathematics Foundation Sample Paper 1', subject: 'Mathematics', questions: 15, duration: 30, level: 'Foundation', note: 'Practice set based on the current Quantitative Aptitude question bank.' },
-  'science-foundation-1': { title: 'Science Foundation Sample Paper 1', subject: 'Science', questions: 15, duration: 30, level: 'Foundation', note: 'Science practice content is currently sourced from the existing GK/Science bank.' },
-  'english-foundation-1': { title: 'English Foundation Sample Paper 1', subject: 'English', questions: 15, duration: 25, level: 'Foundation', note: 'Practice set based on the current English question bank.' },
-  'mixed-practice-1': { title: 'Mixed Practice Sample Paper 1', subject: 'Mixed', questions: 20, duration: 35, level: 'Practice', note: 'Mixed practice using the current question bank.' },
-}
-
-function getQuestions(id) {
-  const paper = papers[id]
-  if (!paper) return []
-  if (id === 'mixed-practice-1') return shuffleArray(questionBank).slice(0, 20)
-  if (id === 'maths-foundation-1') return shuffleArray(questionBank.filter((q) => q.subject === 'quant')).slice(0, 15)
-  if (id === 'english-foundation-1') return shuffleArray(questionBank.filter((q) => q.subject === 'english')).slice(0, 15)
-  return shuffleArray(questionBank.filter((q) => q.topic === 'Science' || q.subject === 'gk')).slice(0, 15)
-}
+import { samplePapers } from '../data/samplePapers.js'
 
 export default function SamplePaperDetail() {
   const { paperId } = useParams()
   const navigate = useNavigate()
-  const paper = papers[paperId]
+  const paper = samplePapers[paperId]
 
   if (!paper) {
     return (
@@ -34,14 +18,15 @@ export default function SamplePaperDetail() {
   }
 
   const startPaper = () => {
-    const questions = getQuestions(paperId)
     navigate('/quiz/play', {
       state: {
-        questions,
+        questions: paper.questions,
         title: paper.title,
         subject: paper.subject,
-        mixed: paperId === 'mixed-practice-1',
+        mixed: false,
         examName: 'Sample Paper',
+        duration: paper.duration,
+        source: 'sample-paper',
       },
     })
   }
@@ -66,7 +51,7 @@ export default function SamplePaperDetail() {
       </section>
 
       <div className="grid grid-cols-3 gap-3">
-        <div className="card p-4 text-center"><p className="text-xl font-black text-primary-600">{paper.questions}</p><p className="text-xs text-slate-400">Questions</p></div>
+        <div className="card p-4 text-center"><p className="text-xl font-black text-primary-600">{paper.questions.length}</p><p className="text-xs text-slate-400">Questions</p></div>
         <div className="card p-4 text-center"><p className="text-xl font-black text-primary-600">{paper.duration}</p><p className="text-xs text-slate-400">Minutes</p></div>
         <div className="card p-4 text-center"><p className="text-xl font-black text-emerald-600">FREE</p><p className="text-xs text-slate-400">Access</p></div>
       </div>
@@ -74,10 +59,18 @@ export default function SamplePaperDetail() {
       <div className="card p-5 space-y-4">
         <h2 className="section-title">Before you start</h2>
         <div className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
-          <p><i className="fas fa-circle-check mr-2 text-emerald-500" />Answer each question and read the explanation after submitting.</p>
-          <p><i className="fas fa-circle-check mr-2 text-emerald-500" />The current practice engine shows one question at a time with a short timer.</p>
-          <p><i className="fas fa-circle-info mr-2 text-primary-500" />{paper.note}</p>
+          <p><i className="fas fa-circle-check mr-2 text-emerald-500" />15 original questions with four options each.</p>
+          <p><i className="fas fa-circle-check mr-2 text-emerald-500" />Each question includes an explanation for learning after the attempt.</p>
+          <p><i className="fas fa-circle-info mr-2 text-primary-500" />This is an original StudyPath practice paper and is free to attempt.</p>
         </div>
+
+        <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/60">
+          <p className="text-xs font-black uppercase tracking-wider text-slate-400">Topics covered</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {[...new Set(paper.questions.map((q) => q.topic))].map((topic) => <span key={topic} className="rounded-full bg-white px-3 py-1 text-xs font-bold text-slate-600 shadow-sm dark:bg-slate-700 dark:text-slate-200">{topic}</span>)}
+          </div>
+        </div>
+
         <button onClick={startPaper} className="btn-primary w-full py-3 text-base">
           Start Paper <i className="fas fa-arrow-right" />
         </button>
