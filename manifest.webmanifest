@@ -1,0 +1,18 @@
+{
+  "name": "StudyPath — Exam Prep & Study Coach",
+  "short_name": "StudyPath",
+  "start_url": "/studypath/",
+  "scope": "/studypath/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "description": "StudyPath is a personalized exam preparation and study companion for Indian students.",
+  "icons": [
+    {
+      "src": "/studypath/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
