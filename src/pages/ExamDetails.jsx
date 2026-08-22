@@ -170,6 +170,31 @@ export default function ExamDetails() {
             </button>
           </div>
 
+          {exam.id === 'upsc-cse' && (
+            <div className="card p-4 border border-indigo-100 dark:border-indigo-900/50 bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-950/40 dark:to-slate-900">
+              <div className="flex items-start gap-3">
+                <div className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                  <i className="fas fa-file-pdf"></i>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-bold text-sm">UPSC Prelims Mock 01</h3>
+                    <span className="badge bg-emerald-100 text-emerald-700">FREE</span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">100 questions • 200 marks • 2 hours • Advanced UPSC-style GS Paper I</p>
+                  <a
+                    href="/upsc/StudyPath_UPSC_CSE_Prelims_Mock_01_Free.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex mt-3"
+                  >
+                    <i className="fas fa-book-open"></i> Open Mock PDF
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
           <AdSlot label="Sponsored Practice Material" />
         </div>
       )}
