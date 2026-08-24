@@ -46,7 +46,7 @@ function numeric(id,r,section){
  const a=10+Math.floor(r()*90), b=2+Math.floor(r()*18), t=Math.floor(r()*5)
  if(t===0)return makeQ(id,`What is ${a} × ${b}?`,[String(a*b-b),String(a*b),String(a*b+b),String(a*b+10)],'B',`${a} × ${b} = ${a*b}.`,'Quantitative Aptitude',section)
  if(t===1)return makeQ(id,`If ${b}% of a number is ${b*2}, the number is:`,[String(b),String(b*2),String(200),String(2*b*b)],'C',`${b*2} ÷ (${b}/100) = 200.`,'Quantitative Aptitude',section)
- if(t===2)return makeQ(id,`The average of ${a}, ${a+2}, ${a+4}, ${a+6} is:`,[String(a+2),String(a+3),String(a+4),String(a+5)],'C',`The terms are equally spaced, so the average is ${a+3}.`,'Quantitative Aptitude',section)
+ if(t===2)return makeQ(id,`The average of ${a}, ${a+2}, ${a+4}, ${a+6} is:`,[String(a+2),String(a+3),String(a+4),String(a+5)],'B',`The sum is ${4*a+12}; dividing by 4 gives ${a+3}.`,'Quantitative Aptitude',section)
  if(t===3)return makeQ(id,`A price of ₹${a*10} is increased by 10%. The new price is:`,[`₹${a*10+5}`,`₹${a*11}`,`₹${a*12}`,`₹${a*9}`],'B',`10% of ₹${a*10} is ₹${a}; the new price is ₹${a*11}.`,'Quantitative Aptitude',section)
  const n=a*2; return makeQ(id,`The HCF of ${n} and ${a} is:`,[String(a/2),String(a),String(n),String(a+2)],'B',`${a} divides both numbers and is the greatest common factor.`,'Quantitative Aptitude',section)
 }
@@ -81,7 +81,7 @@ function questionFor(id,examId,section,r){
 function plan(examId){
  const standard=examMockStandards[examId], cfg=EXAMS[examId]
  const known=(standard?.sections||[]).filter(s=>Number.isInteger(s.questions))
- if(known.length){const knownCount=known.reduce((n,s)=>n+s.questions,0);const target=cfg.count; if(knownCount>=target)return known.map(s=>({name:s.name,questions:s.questions}));const last=known[known.length-1];return[...known.slice(0,-1),{name:last.name,questions:last.questions+(target-knownCount)}]}
+ if(known.length){const knownCount=known.reduce((n,s)=>n+s.questions,0);const target=cfg.count;if(knownCount>=target)return known.map(s=>({name:s.name,questions:s.questions}));const last=known[known.length-1];return[...known.slice(0,-1),{name:last.name,questions:last.questions+(target-knownCount)}]}
  const sections=standard?.sections?.length?standard.sections:[{name:'General Awareness'}], each=Math.floor(cfg.count/sections.length), rem=cfg.count%sections.length
  return sections.map((s,i)=>({name:s.name,questions:each+(i<rem?1:0)}))
 }
