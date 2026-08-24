@@ -10,12 +10,11 @@ permissions:
   pages: write
   id-token: write
 
-# Do not cancel an older deployment when another commit arrives.
-# Runs are queued so every main commit can finish, and the newest commit
-# will be the final deployment in the queue.
+# Only the newest main commit needs to deploy. Cancel stale/queued runs so
+# a burst of commits cannot leave the current deployment waiting behind old runs.
 concurrency:
   group: "studypath-pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
