@@ -1,19 +1,22 @@
-import { upscMock01 } from './upscMock01';
-import { upscMock02 } from './upscMock02';
-import { upscMock03 } from './upscMock03';
-import { upscMock07 } from './upscMock07';
-import { upscMock08 } from './upscMock08';
-import { upscMock09 } from './upscMock09';
-import { upscMock10 } from './upscMock10';
+import { upscMock01 } from './upscMock01.js';
+import { upscMock02 } from './upscMock02.js';
+import { upscMock03 } from './upscMock03.js';
+import { upscMock04 } from './upscMock04.js';
+import { upscMock05 } from './upscMock05.js';
+import { upscMock06 } from './upscMock06.js';
+import { upscMock07 } from './upscMock07.js';
+import { upscMock08 } from './upscMock08.js';
+import { upscMock09 } from './upscMock09.js';
+import { upscMock10 } from './upscMock10.js';
 
-// Single source of truth for papers that have complete question data.
+// Single source of truth for the complete UPSC sample-paper series.
 export const upscSamplePapers = [
   upscMock01,
   upscMock02,
   upscMock03,
-  { id: 'upsc-prelims-04', title: 'UPSC CSE Prelims — Mock 04', status: 'coming-soon', free: true },
-  { id: 'upsc-prelims-05', title: 'UPSC CSE Prelims — Mock 05', status: 'coming-soon', free: true },
-  { id: 'upsc-prelims-06', title: 'UPSC CSE Prelims — Mock 06', status: 'coming-soon', free: true },
+  upscMock04,
+  upscMock05,
+  upscMock06,
   upscMock07,
   upscMock08,
   upscMock09,
