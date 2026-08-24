@@ -1,7 +1,31 @@
 import React, { useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { sscCglOriginalPractice2024Tier1 } from '../data/sscCglPyqPractice.js'
 
 export default function PYQPracticeViewer() {
+  const { paperId, tier } = useParams()
+  const isOriginalPractice = paperId === 'ssc-cgl-original-practice-2024' && tier === 'tier-1'
+
+  if (!isOriginalPractice) {
+    return (
+      <div className="space-y-5 pb-8">
+        <section className="card p-6 md:p-8">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-500">PYQ asset unavailable</p>
+          <h1 className="mt-2 text-2xl font-black text-slate-900 dark:text-white">This official paper is not hosted yet</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500 dark:text-slate-400">The year and tier are indexed in StudyPath, but the actual official paper asset has not been supplied or licensed for hosting. We will not substitute a different paper here.</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link to="/pyq" className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-black dark:border-slate-700">Back to PYQ Library</Link>
+            <Link to="/pyq/ssc-cgl-original-practice-2024/tier-1" className="rounded-xl bg-indigo-600 px-4 py-3 text-sm font-black text-white hover:bg-indigo-700">Start Original Practice</Link>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  return <OriginalPracticeViewer />
+}
+
+function OriginalPracticeViewer() {
   const paper = sscCglOriginalPractice2024Tier1
   const [index, setIndex] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
@@ -16,7 +40,7 @@ export default function PYQPracticeViewer() {
   return (
     <div className="space-y-5 pb-8">
       <section className="card p-5 md:p-7">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500">StudyPath Original Paper</p>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500">StudyPath Original Practice</p>
         <h1 className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{paper.title}</h1>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{paper.note}</p>
         <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold">
@@ -27,7 +51,7 @@ export default function PYQPracticeViewer() {
       </section>
 
       <section className="card p-5">
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="mb-5 flex flex-wrap gap-2">
           {sections.map((section) => <span key={section} className="rounded-lg bg-slate-100 px-3 py-2 text-xs font-black text-slate-600 dark:bg-slate-800 dark:text-slate-300">{section}</span>)}
         </div>
         <div className="flex items-center justify-between text-xs font-bold text-slate-400">
