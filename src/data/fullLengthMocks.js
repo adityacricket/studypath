@@ -6,11 +6,11 @@ import { examMockStandards } from './examMockStandards.js'
 
 const EXAMS = {
   'ssc-cgl': { count: 100, duration: 60 }, 'ssc-chsl': { count: 100, duration: 60 }, 'ssc-mts': { count: 90, duration: 90 },
-  'upsc-cse': { count: 100, duration: 120 }, 'nda': { count: 270, duration: 300 }, 'cds': { count: 120, duration: 360 },
+  'upsc-cse': { count: 100, duration: 120 }, 'nda': { count: 270, duration: 300 }, 'cds': { count: 300, duration: 360 },
   'jee-main': { count: 75, duration: 180 }, 'jee-advanced': { count: 54, duration: 360 }, 'neet-ug': { count: 180, duration: 180 },
   'cuet-ug': { count: 50, duration: 60 }, 'gate': { count: 65, duration: 180 }, 'cat': { count: 68, duration: 120 },
   'clat': { count: 120, duration: 120 }, 'ugc-net': { count: 150, duration: 180 }, 'ibps-po': { count: 100, duration: 60 },
-  'ibps-clerk': { count: 100, duration: 60 }, 'sbi-po': { count: 100, duration: 60 }, 'rrb-ntpc': { count: 100, duration: 90 },
+  'ibps-clerk': { count: 255, duration: 240 }, 'sbi-po': { count: 100, duration: 60 }, 'rrb-ntpc': { count: 100, duration: 90 },
   'rrb-group-d': { count: 100, duration: 90 }, 'ctet': { count: 150, duration: 150 },
 }
 
@@ -68,7 +68,6 @@ const SCIENCE = [
 function rng(seed){let x=(seed>>>0)||1;return()=>{x=Math.imul(1664525,x)+1013904223;return(x>>>0)/4294967296}}
 function pick(r,a){return a[Math.floor(r()*a.length)]}
 function makeQ(id,question,options,answer,explanation,topic,section,difficulty='Medium'){return{id,question,options,answer,explanation,topic,section,difficulty,source:'StudyPath Original'}}
-
 function numeric(id,r,section,level='Medium'){
  const a=8+Math.floor(r()*92), b=2+Math.floor(r()*18), t=Math.floor(r()*7)
  if(t===0){const ans=a*b;return makeQ(id,`What is ${a} × ${b}?`,[String(ans-b),String(ans),String(ans+b),String(ans+10)],'B',`${a} × ${b} = ${ans}.`,'Arithmetic',section,level)}
@@ -79,98 +78,30 @@ function numeric(id,r,section,level='Medium'){
  if(t===5){const rate=5+Math.floor(r()*6),principal=a*100,time=2,ans=principal*rate*time/100;return makeQ(id,`Simple interest on ₹${principal} at ${rate}% per annum for ${time} years is:`,[`₹${ans-rate*10}`,`₹${ans}`,`₹${ans+rate*10}`,`₹${ans+principal/10}`],'B',`SI = P × R × T / 100 = ₹${ans}.`,'Simple Interest',section,level)}
  const speed=20+Math.floor(r()*30),time=2+Math.floor(r()*4),distance=speed*time;return makeQ(id,`A vehicle travels at ${speed} km/h for ${time} hours. Distance covered is:`,[`${distance-5} km`,`${distance} km`,`${distance+5} km`,`${distance+10} km`],'B',`Distance = speed × time = ${speed} × ${time} = ${distance} km.`,'Time, Speed & Distance',section,level)
 }
-
 function reasoning(id,r,section){
  const a=2+Math.floor(r()*20), step=2+Math.floor(r()*8), t=Math.floor(r()*4)
  if(t===0){const next=a+step*4;return makeQ(id,`Find the next term: ${a}, ${a+step}, ${a+2*step}, ${a+3*step}, ?`,[String(next-2),String(next),String(next+2),String(next+step)],'B',`The sequence increases by ${step} each time.`,'Series',section)}
  if(t===1){const ch=String.fromCharCode(65+Math.floor(r()*20)),next=String.fromCharCode(ch.charCodeAt(0)+1);return makeQ(id,`If each letter is shifted one place forward, ${ch} becomes:`,[String.fromCharCode(ch.charCodeAt(0)-1),next,ch,String.fromCharCode(ch.charCodeAt(0)+2)],'B',`The next letter after ${ch} is ${next}.`,'Coding-Decoding',section)}
- if(t===2){const n=3+Math.floor(r()*8);return makeQ(id,`A person faces north, turns right ${n%2?90:180}° and then turns right 90°. Which direction can the final facing be?`,['North','East','South','West'],n%2?'C':'W',n%2?'Two right turns give south.':'Three right-angle turns give west.','Direction Sense',section)}
- const x=3+Math.floor(r()*10);return makeQ(id,`If all ${x} cats are animals and all animals need food, which conclusion follows?`,[`Some cats need food`,`No cats need food`,`All food are cats`,`Cats are not animals`],'A','Cats are animals and animals need food, so every cat needs food; therefore some cats do as well.','Syllogism',section)
+ if(t===2){return makeQ(id,'A person faces north and turns right twice by 90° each. Which direction is the person facing?', ['North','East','South','West'],'C','Two right turns of 90° make a 180° turn, so the person faces south.','Direction Sense',section)}
+ return makeQ(id,'If all cats are animals and all animals need food, which conclusion follows?',['Some cats need food','No cats need food','All food are cats','Cats are not animals'],'A','Cats are animals and animals need food, so cats need food; therefore some cats need food.','Syllogism',section)
 }
-
 function english(id,r,section){const f=pick(r,ENGLISH);return makeQ(id,f[0],f[1],f[2],f[3],'English',section)}
 function banking(id,r,section){const f=pick(r,BANKING);return makeQ(id,f[0],f[1],f[2],f[3],'Banking Awareness',section)}
 function science(id,r,section){const f=pick(r,SCIENCE);return makeQ(id,f[0],f[1],f[2],f[3],f[4],section)}
 function general(id,r,section){const f=pick(r,FACTS);return makeQ(id,f[0],f[1],f[2],f[3],'General Awareness',section)}
-
-function verbal(id,r,section){
- const f=pick(r,ENGLISH);return makeQ(id,f[0],f[1],f[2],f[3],/varc|verbal|language/i.test(section)?'Verbal Ability':'Language',section)
-}
-function dilr(id,r,section){
- const n=4+Math.floor(r()*5), step=2+Math.floor(r()*5), total=n*step;return makeQ(id,`A set contains ${n} groups with ${step} items in each group. Total items are:`,[String(total-step),String(total),String(total+step),String(total+2)],'B',`Total = ${n} × ${step} = ${total}.`,'Data Interpretation & Logical Reasoning',section)
-}
-function physics(id,r,section){
- const mass=2+Math.floor(r()*8),acc=2+Math.floor(r()*6),force=mass*acc;return makeQ(id,`A ${mass} kg body has acceleration ${acc} m/s². Its net force is:`,[`${force-2} N`,`${force} N`,`${force+2} N`,`${mass+acc} N`],'B',`By F = ma, F = ${mass} × ${acc} = ${force} N.`,'Physics',section)
-}
+function verbal(id,r,section){const f=pick(r,ENGLISH);return makeQ(id,f[0],f[1],f[2],f[3],/varc|verbal|language/i.test(section)?'Verbal Ability':'Language',section)}
+function dilr(id,r,section){const n=4+Math.floor(r()*5),step=2+Math.floor(r()*5),total=n*step;return makeQ(id,`A set contains ${n} groups with ${step} items in each group. Total items are:`,[String(total-step),String(total),String(total+step),String(total+2)],'B',`Total = ${n} × ${step} = ${total}.`,'Data Interpretation & Logical Reasoning',section)}
+function physics(id,r,section){const mass=2+Math.floor(r()*8),acc=2+Math.floor(r()*6),force=mass*acc;return makeQ(id,`A ${mass} kg body has acceleration ${acc} m/s². Its net force is:`,[`${force-2} N`,`${force} N`,`${force+2} N`,`${mass+acc} N`],'B',`By F = ma, F = ${mass} × ${acc} = ${force} N.`,'Physics',section)}
 function chemistry(id,r,section){return science(id,r,section)}
 function biology(id,r,section){return science(id,r,section)}
-function legal(id,r,section){
- const f=pick(r,[
-  ['A contract requires valid consideration. Which is generally true?',['Consideration is never relevant','Lawful consideration supports enforceability subject to exceptions','Only a witness creates consideration','Consideration must always be money'],'B','A lawful consideration is a basic contractual element, subject to recognised exceptions.'],
-  ['A person is presumed innocent until:', ['Conviction','Arrest','Charge sheet','Investigation begins'],'A','The presumption of innocence persists unless guilt is established through the legal process.'],
-  ['Natural justice primarily includes:', ['Audi alteram partem','No hearing','Secret punishment','Automatic conviction'],'A','Audi alteram partem means the affected party should have an opportunity to be heard.'],
- ]);return makeQ(id,f[0],f[1],f[2],f[3],'Legal Reasoning',section)
-}
-function pedagogy(id,r,section){
- const f=pick(r,[
-  ['A learner-centred classroom primarily emphasizes:', ['Passive copying','Active participation and understanding','Only memorisation','Punishment'],'B','Learner-centred teaching involves active participation and construction of understanding.'],
-  ['Formative assessment is mainly used to:', ['Support learning during instruction','Only rank students at year end','Replace teaching','Award degrees'],'A','Formative assessment provides feedback during learning so instruction can improve.'],
-  ['Inclusive education aims to:', ['Exclude learners needing support','Provide meaningful participation for diverse learners','Teach only high achievers','Avoid adaptations'],'B','Inclusion seeks meaningful participation and access for diverse learners.'],
- ]);return makeQ(id,f[0],f[1],f[2],f[3],'Child Development & Pedagogy',section)
-}
-function upsc(id,r,section){
- if(/polity|history|geography|economy|environment|general/i.test(section))return general(id,r,section)
- return makeQ(id,'Which approach best supports evidence-based public policy?',['Use verified data and transparent evaluation','Ignore outcomes','Use only rumours','Avoid measurement'],'A','Evidence-based policy relies on credible data, evaluation and transparent reasoning.','General Studies',section)
-}
-function gate(id,r,section){
- if(/aptitude/i.test(section))return numeric(id,r,section)
- const a=2+Math.floor(r()*8),b=3+Math.floor(r()*8);return makeQ(id,`If a system has ${a} inputs and each produces ${b} outputs, total outputs are:`,[String(a+b),String(a*b),String(a*b+1),String(a*b-1)],'B',`Multiplying ${a} inputs by ${b} outputs per input gives ${a*b}.`,'Engineering Aptitude / Mathematics',section)
-}
+function legal(id,r,section){const f=pick(r,[['A contract requires valid consideration. Which is generally true?',['Consideration is never relevant','Lawful consideration supports enforceability subject to exceptions','Only a witness creates consideration','Consideration must always be money'],'B','A lawful consideration is a basic contractual element, subject to recognised exceptions.'],['A person is presumed innocent until:',['Conviction','Arrest','Charge sheet','Investigation begins'],'A','The presumption of innocence persists unless guilt is established through the legal process.'],['Natural justice primarily includes:',['Audi alteram partem','No hearing','Secret punishment','Automatic conviction'],'A','Audi alteram partem means the affected party should have an opportunity to be heard.']]);return makeQ(id,f[0],f[1],f[2],f[3],'Legal Reasoning',section)}
+function pedagogy(id,r,section){const f=pick(r,[['A learner-centred classroom primarily emphasizes:',['Passive copying','Active participation and understanding','Only memorisation','Punishment'],'B','Learner-centred teaching involves active participation and construction of understanding.'],['Formative assessment is mainly used to:',['Support learning during instruction','Only rank students at year end','Replace teaching','Award degrees'],'A','Formative assessment provides feedback during learning so instruction can improve.'],['Inclusive education aims to:',['Exclude learners needing support','Provide meaningful participation for diverse learners','Teach only high achievers','Avoid adaptations'],'B','Inclusion seeks meaningful participation and access for diverse learners.']]);return makeQ(id,f[0],f[1],f[2],f[3],'Child Development & Pedagogy',section)}
+function upsc(id,r,section){if(/polity|history|geography|economy|environment|general/i.test(section))return general(id,r,section);return makeQ(id,'Which approach best supports evidence-based public policy?',['Use verified data and transparent evaluation','Ignore outcomes','Use only rumours','Avoid measurement'],'A','Evidence-based policy relies on credible data, evaluation and transparent reasoning.','General Studies',section)}
+function gate(id,r,section){if(/aptitude/i.test(section))return numeric(id,r,section);const a=2+Math.floor(r()*8),b=3+Math.floor(r()*8);return makeQ(id,`If a system has ${a} inputs and each produces ${b} outputs, total outputs are:`,[String(a+b),String(a*b),String(a*b+1),String(a*b-1)],'B',`Multiplying ${a} inputs by ${b} outputs per input gives ${a*b}.`,'Engineering Aptitude / Mathematics',section)}
 function cuet(id,r,section){return /language/i.test(section)?english(id,r,section):general(id,r,section)}
-function ugc(id,r,section){
- if(/paper i|teaching|research|aptitude/i.test(section))return pedagogy(id,r,section)
- return general(id,r,section)
-}
-
-function questionFor(id,examId,section,r){
- const s=section.toLowerCase()
- if(/legal/.test(s))return legal(id,r,section)
- if(/pedagogy|child development/.test(s))return pedagogy(id,r,section)
- if(/physics/.test(s))return physics(id,r,section)
- if(/chemistry/.test(s))return chemistry(id,r,section)
- if(/biology|botany|zoology/.test(s))return biology(id,r,section)
- if(/bank|financial/.test(s))return banking(id,r,section)
- if(/dilr|logical reasoning|logical/.test(s) && /cat/.test(examId))return dilr(id,r,section)
- if(/reasoning|logical/.test(s))return reasoning(id,r,section)
- if(/quant|math|numerical|arithmetic|qa|technique/.test(s))return numeric(id,r,section)
- if(/english|varc|language|verbal/.test(s))return verbal(id,r,section)
- if(/gate|engineering/.test(s))return gate(id,r,section)
- if(/cuet/.test(examId))return cuet(id,r,section)
- if(/ugc/.test(examId))return ugc(id,r,section)
- if(/upsc/.test(examId))return upsc(id,r,section)
- return general(id,r,section)
-}
-
-function plan(examId){
- const standard=examMockStandards[examId],cfg=EXAMS[examId]
- const known=(standard?.sections||[]).filter(s=>Number.isInteger(s.questions))
- if(known.length){
-  const knownCount=known.reduce((n,s)=>n+s.questions,0)
-  if(knownCount>=cfg.count)return known.map(s=>({name:s.name,questions:s.questions}))
-  const last=known[known.length-1]
-  return [...known.slice(0,-1),{name:last.name,questions:last.questions+(cfg.count-knownCount)}]
- }
- const sections=standard?.sections?.length?standard.sections:[{name:'General Awareness'}]
- const each=Math.floor(cfg.count/sections.length),rem=cfg.count%sections.length
- return sections.map((s,i)=>({name:s.name,questions:each+(i<rem?1:0)}))
-}
-
-export function buildFullLengthMock(examId,mockNumber){
- const cfg=EXAMS[examId];if(!cfg)return null
- const seed=mockNumber*7919+examId.split('').reduce((n,c)=>n+c.charCodeAt(0),0),r=rng(seed),questions=[];let id=1
- plan(examId).forEach(s=>{for(let i=0;i<s.questions;i++)questions.push(questionFor(id++,examId,s.name,r))})
- return{id:`${examId}-mock-${String(mockNumber).padStart(2,'0')}`,examId,title:`${examId.toUpperCase()} Full-Length Mock ${String(mockNumber).padStart(2,'0')}`,free:true,status:'ready',duration:cfg.duration,questions,generated:true,original:true,standard:examMockStandards[examId]||null}
-}
-
+function ugc(id,r,section){if(/paper i|teaching|research|aptitude/i.test(section))return pedagogy(id,r,section);return general(id,r,section)}
+function questionFor(id,examId,section,r){const s=section.toLowerCase();if(/legal/.test(s))return legal(id,r,section);if(/pedagogy|child development/.test(s))return pedagogy(id,r,section);if(/physics/.test(s))return physics(id,r,section);if(/chemistry/.test(s))return chemistry(id,r,section);if(/biology|botany|zoology/.test(s))return biology(id,r,section);if(/bank|financial/.test(s))return banking(id,r,section);if(/dilr|logical reasoning|logical/.test(s)&&/cat/.test(examId))return dilr(id,r,section);if(/reasoning|logical/.test(s))return reasoning(id,r,section);if(/quant|math|numerical|arithmetic|qa|technique/.test(s))return numeric(id,r,section);if(/english|varc|language|verbal/.test(s))return verbal(id,r,section);if(/gate|engineering/.test(s))return gate(id,r,section);if(/cuet/.test(examId))return cuet(id,r,section);if(/ugc/.test(examId))return ugc(id,r,section);if(/upsc/.test(examId))return upsc(id,r,section);return general(id,r,section)}
+function plan(examId){const standard=examMockStandards[examId],cfg=EXAMS[examId];const known=(standard?.sections||[]).filter(s=>Number.isInteger(s.questions));if(known.length){const knownCount=known.reduce((n,s)=>n+s.questions,0);if(knownCount>=cfg.count)return known.map(s=>({name:s.name,questions:s.questions}));const last=known[known.length-1];return [...known.slice(0,-1),{name:last.name,questions:last.questions+(cfg.count-knownCount)}]}const sections=standard?.sections?.length?standard.sections:[{name:'General Awareness'}];const each=Math.floor(cfg.count/sections.length),rem=cfg.count%sections.length;return sections.map((s,i)=>({name:s.name,questions:each+(i<rem?1:0)}))}
+export function buildFullLengthMock(examId,mockNumber){const cfg=EXAMS[examId];if(!cfg)return null;const seed=mockNumber*7919+examId.split('').reduce((n,c)=>n+c.charCodeAt(0),0),r=rng(seed),questions=[];let id=1;plan(examId).forEach(s=>{for(let i=0;i<s.questions;i++)questions.push(questionFor(id++,examId,s.name,r))});return{id:`${examId}-mock-${String(mockNumber).padStart(2,'0')}`,examId,title:`${examId.toUpperCase()} Full-Length Mock ${String(mockNumber).padStart(2,'0')}`,free:true,status:'ready',duration:cfg.duration,questions,generated:true,original:true,standard:examMockStandards[examId]||null}}
 export function getFullLengthMocks(examId){return Array.from({length:10},(_,i)=>buildFullLengthMock(examId,i+1)).filter(Boolean)}
 export const fullLengthMockExamIds=Object.keys(EXAMS)
