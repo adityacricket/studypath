@@ -1,18 +1,13 @@
 import React from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { samplePapers } from '../data/samplePapers.js'
-import { upscMock07 } from '../data/upscMock07.js'
-import { upscMock08 } from '../data/upscMock08.js'
-import { upscMock09 } from '../data/upscMock09.js'
-import { upscMock10 } from '../data/upscMock10.js'
 import { upscSamplePapers } from '../data/upscSamplePapers.js'
 
-const upscById = Object.fromEntries([
-  upscMock07,
-  upscMock08,
-  upscMock09,
-  upscMock10,
-].map((paper) => [paper.id, paper]))
+const upscById = Object.fromEntries(
+  upscSamplePapers
+    .filter((paper) => paper?.id && paper?.questions?.length)
+    .map((paper) => [paper.id, paper])
+)
 
 export default function SamplePaperDetail() {
   const { paperId } = useParams()
@@ -22,6 +17,18 @@ export default function SamplePaperDetail() {
   const paper = upscPaper || legacyPaper
 
   if (!paper) {
+    const knownUpsc = upscSamplePapers.find((item) => item.id === paperId)
+    if (knownUpsc?.status === 'coming-soon') {
+      return (
+        <div className="card p-8 text-center space-y-3">
+          <i className="fas fa-hourglass-half text-3xl text-amber-500" />
+          <h1 className="text-lg font-extrabold">This sample paper is coming soon</h1>
+          <p className="text-sm text-slate-500">We are preparing the complete question set and explanations.</p>
+          <Link to="/sample-papers" className="btn-primary">Back to Sample Papers</Link>
+        </div>
+      )
+    }
+
     return (
       <div className="card p-8 text-center space-y-3">
         <i className="fas fa-file-circle-question text-3xl text-amber-500" />
@@ -31,6 +38,12 @@ export default function SamplePaperDetail() {
     )
   }
 
+  const questionCount = paper.questions?.length || 0
+  const duration = paper.duration || 120
+  const isUpsc = Boolean(upscPaper)
+  const isFullLength = isUpsc && questionCount >= 100
+  const topics = [...new Set((paper.questions || []).map((q) => q.topic).filter(Boolean))]
+
   const startPaper = () => {
     navigate('/quiz/play', {
       state: {
@@ -39,16 +52,12 @@ export default function SamplePaperDetail() {
         subject: paper.subject || 'UPSC CSE',
         mixed: false,
         examName: paper.title,
-        duration: paper.duration || 120,
+        duration,
+        fullLength: isFullLength,
         source: 'sample-paper',
       },
     })
   }
-
-  const questionCount = paper.questions?.length || 0
-  const duration = paper.duration || 120
-  const topics = [...new Set((paper.questions || []).map((q) => q.topic).filter(Boolean))]
-  const isUpsc = Boolean(upscPaper || upscSamplePapers.some((item) => item.id === paperId))
 
   return (
     <div className="mx-auto max-w-3xl space-y-5 pb-8">
@@ -81,6 +90,7 @@ export default function SamplePaperDetail() {
           <p><i className="fas fa-circle-check mr-2 text-emerald-500" />{questionCount} original practice questions with four options each.</p>
           <p><i className="fas fa-circle-check mr-2 text-emerald-500" />Every question includes an answer and explanation for review.</p>
           <p><i className="fas fa-circle-info mr-2 text-primary-500" />{isUpsc ? 'UPSC CSE practice paper — free to attempt.' : 'Original StudyPath practice paper — free to attempt.'}</p>
+          {isFullLength && <p><i className="fas fa-clock mr-2 text-primary-500" />The full paper uses one continuous {duration}-minute timer.</p>}
         </div>
 
         <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/60">
