@@ -32,6 +32,7 @@ import SearchPage from './pages/SearchPage.jsx'
 import SamplePapers from './pages/SamplePapers.jsx'
 import SamplePaperDetail from './pages/SamplePaperDetail.jsx'
 import PYQ from './pages/PYQ.jsx'
+import PYQPaperViewer from './pages/PYQPaperViewer.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -63,6 +64,7 @@ export default function App() {
           <Route path="/sample-papers" element={<SamplePapers />} />
           <Route path="/sample-papers/:paperId" element={<SamplePaperDetail />} />
           <Route path="/pyq" element={<PYQ />} />
+          <Route path="/pyq/:paperId/:tier" element={<PYQPaperViewer />} />
           <Route path="/planner" element={<Planner />} />
 
           <Route path="/careers" element={<Careers />} />
