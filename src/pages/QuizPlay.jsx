@@ -24,6 +24,25 @@ function getCorrectIndex(question) {
   return -1
 }
 
+function buildSections(sectionTimers, questionCount) {
+  if (!Array.isArray(sectionTimers) || sectionTimers.length === 0) return []
+
+  let cursor = 0
+  return sectionTimers.map((section, index) => {
+    const count = Math.max(0, Number(section.questions || 0))
+    const start = cursor
+    const end = Math.min(questionCount, cursor + count) - 1
+    cursor += count
+    return {
+      ...section,
+      index,
+      start,
+      end,
+      minutes: Math.max(1, Number(section.minutes || 15)),
+    }
+  }).filter((section) => section.start <= section.end)
+}
+
 export default function QuizPlay() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -40,42 +59,62 @@ export default function QuizPlay() {
   const mixed = !!state.mixed
   const examName = state.examName
   const isFullLength = !!state.fullLength
+  const sections = useMemo(() => buildSections(state.sectionTimers, questions.length), [state.sectionTimers, questions.length])
+  const hasSectionTimers = isFullLength && sections.length > 0
   const totalDurationSeconds = isFullLength ? Math.max(60, Number(state.duration || 120) * 60) : 30
+  const negativeMarking = Math.max(0, Number(state.negativeMarking || 0))
 
   const [currentIdx, setCurrentIdx] = useState(0)
   const [selectedOption, setSelectedOption] = useState(null)
   const [showExplanation, setShowExplanation] = useState(false)
   const [answers, setAnswers] = useState([])
-  const [timeLeft, setTimeLeft] = useState(totalDurationSeconds)
+  const [timeLeft, setTimeLeft] = useState(hasSectionTimers ? sections[0]?.minutes * 60 || 900 : totalDurationSeconds)
   const answersRef = useRef([])
   const finishQuizRef = useRef(null)
 
   const { addQuizResult, addMockScore, recordMistake, completeStudySession } = useApp()
 
   const question = questions[currentIdx]
+  const currentSectionIndex = hasSectionTimers
+    ? Math.max(0, sections.findIndex((section) => currentIdx >= section.start && currentIdx <= section.end))
+    : -1
+  const currentSection = currentSectionIndex >= 0 ? sections[currentSectionIndex] : null
   const progress = questions.length ? ((currentIdx + 1) / questions.length) * 100 : 0
 
   useEffect(() => {
     answersRef.current = answers
   }, [answers])
 
+  function getScoreDetails(finalAnswers) {
+    const correctCount = finalAnswers.filter((entry) => entry.correct).length
+    const wrongCount = finalAnswers.filter((entry) => !entry.correct && !entry.timedOut).length
+    const unansweredCount = finalAnswers.filter((entry) => entry.timedOut || entry.selected === null).length
+    const netScore = correctCount - (wrongCount * negativeMarking)
+    return { correctCount, wrongCount, unansweredCount, netScore }
+  }
+
   function finishQuiz(finalAnswers) {
-    const score = finalAnswers.filter((a) => a.correct).length
+    const { correctCount, wrongCount, unansweredCount, netScore } = getScoreDetails(finalAnswers)
     const total = questions.length
     const result = {
       title,
-      score,
+      score: correctCount,
       total,
       subject: state.subject || null,
       isDaily,
       mixed,
       mistakes: finalAnswers.filter((a) => !a.correct).map((a) => a.questionId),
+      correctCount,
+      wrongCount,
+      unansweredCount,
+      netScore,
+      negativeMarking,
     }
 
     addQuizResult(result)
 
     if (mixed) {
-      addMockScore({ exam: examName || 'Mock Test', score, total })
+      addMockScore({ exam: examName || 'Mock Test', score: netScore, total })
     }
 
     completeStudySession(
@@ -87,9 +126,15 @@ export default function QuizPlay() {
     navigate('/quiz/result', {
       state: {
         answers: finalAnswers,
-        score,
+        score: correctCount,
         total,
         title,
+        correctCount,
+        wrongCount,
+        unansweredCount,
+        netScore,
+        negativeMarking,
+        hasNegativeMarking: negativeMarking > 0,
       },
     })
   }
@@ -97,21 +142,65 @@ export default function QuizPlay() {
   finishQuizRef.current = finishQuiz
 
   useEffect(() => {
+    if (hasSectionTimers) {
+      setTimeLeft(currentSection?.minutes * 60 || 900)
+      setSelectedOption(null)
+      setShowExplanation(false)
+      return
+    }
+
     if (!isFullLength) {
       setSelectedOption(null)
       setShowExplanation(false)
       setTimeLeft(30)
     }
-  }, [currentIdx, isFullLength])
+  }, [currentIdx, currentSectionIndex, currentSection?.minutes, hasSectionTimers, isFullLength])
 
   useEffect(() => {
-    if (!questions.length || (!isFullLength && showExplanation)) return undefined
+    if (!questions.length) return undefined
+    if (!hasSectionTimers && !isFullLength && showExplanation) return undefined
 
     const timer = setInterval(() => {
       setTimeLeft((seconds) => {
         if (seconds > 1) return seconds - 1
 
         clearInterval(timer)
+
+        if (hasSectionTimers && currentSection) {
+          const answeredIds = new Set(answersRef.current.map((answer) => answer.questionId))
+          const timedOutAnswers = questions
+            .slice(currentSection.start, currentSection.end + 1)
+            .filter((item) => !answeredIds.has(item.id))
+            .map((item) => ({
+              questionId: item.id,
+              selected: null,
+              correct: false,
+              question: item,
+              timedOut: true,
+              correctIndex: getCorrectIndex(item),
+            }))
+
+          const nextAnswers = [...answersRef.current, ...timedOutAnswers]
+          answersRef.current = nextAnswers
+          setAnswers(nextAnswers)
+          timedOutAnswers.forEach((entry) => {
+            recordMistake({
+              questionId: entry.question.id,
+              topic: entry.question.topic,
+              type: 'time',
+              note: `Section timer expired before this question was answered.`,
+            })
+          })
+
+          const nextQuestion = currentSection.end + 1
+          if (nextQuestion < questions.length) {
+            setCurrentIdx(nextQuestion)
+            return currentSectionIndex + 1
+          }
+
+          finishQuizRef.current?.(nextAnswers)
+          return 0
+        }
 
         if (isFullLength) {
           const answeredIds = new Set(answersRef.current.map((answer) => answer.questionId))
@@ -167,7 +256,7 @@ export default function QuizPlay() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [currentIdx, isFullLength, question, questions, recordMistake, showExplanation])
+  }, [currentIdx, currentSectionIndex, currentSection, hasSectionTimers, isFullLength, question, questions, recordMistake, showExplanation])
 
   if (!questions.length) {
     return (
@@ -225,7 +314,7 @@ export default function QuizPlay() {
     finishQuizRef.current?.(answersRef.current)
   }
 
-  const timerLabel = isFullLength
+  const timerLabel = hasSectionTimers || isFullLength
     ? `${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, '0')}`
     : String(timeLeft)
 
@@ -238,7 +327,7 @@ export default function QuizPlay() {
 
         <div className="flex-1">
           <div className="mb-1 flex justify-between text-xs text-slate-400">
-            <span>{title}</span>
+            <span>{title}{currentSection ? ` · ${currentSection.name}` : ''}</span>
             <span>{currentIdx + 1} / {questions.length}</span>
           </div>
           <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
@@ -246,10 +335,25 @@ export default function QuizPlay() {
           </div>
         </div>
 
-        <div className={`flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-xs font-bold ${timeLeft <= (isFullLength ? 300 : 10) ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'}`} aria-label="Time remaining">
+        <div className={`flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-xs font-bold ${timeLeft <= (hasSectionTimers || isFullLength ? 300 : 10) ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'}`} aria-label="Time remaining">
           {timerLabel}
         </div>
       </div>
+
+      {hasSectionTimers && currentSection && (
+        <div className="rounded-xl bg-indigo-50 px-3 py-2 text-xs text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-300">
+          <div className="flex items-center justify-between gap-3">
+            <span className="font-bold">Section {currentSectionIndex + 1} of {sections.length}</span>
+            <span>{currentSection.questions} questions · {currentSection.minutes} minutes</span>
+          </div>
+        </div>
+      )}
+
+      {negativeMarking > 0 && (
+        <div className="rounded-xl bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700 dark:bg-amber-900/20 dark:text-amber-300">
+          Wrong answer penalty: −{negativeMarking} marks
+        </div>
+      )}
 
       <div className="card animate-slide-up p-5">
         <div className="mb-3 flex items-center gap-2">
