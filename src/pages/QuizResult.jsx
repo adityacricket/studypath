@@ -24,7 +24,7 @@ function getCorrectIndex(question) {
 export default function QuizResult() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { answers, score, total, title } = location.state || {}
+  const { answers, score, total, title, correctCount, wrongCount, unansweredCount, netScore, negativeMarking } = location.state || {}
   const [showReview, setShowReview] = useState(false)
 
   if (!answers) {
@@ -36,14 +36,19 @@ export default function QuizResult() {
     )
   }
 
-  const percentage = total ? Math.round((score / total) * 100) : 0
-  const wrong = total - score
-  const accuracyLabel = percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : percentage >= 40 ? 'Keep building' : 'Needs revision'
+  const actualCorrect = Number.isFinite(correctCount) ? correctCount : score || 0
+  const actualWrong = Number.isFinite(wrongCount) ? wrongCount : Math.max(0, total - actualCorrect)
+  const actualUnanswered = Number.isFinite(unansweredCount) ? unansweredCount : 0
+  const hasNegativeMarking = Number(negativeMarking || 0) > 0
+  const rawNetScore = Number.isFinite(netScore) ? netScore : actualCorrect
+  const percentage = total ? Math.round((rawNetScore / total) * 100) : 0
+  const accuracyPercentage = total ? Math.round((actualCorrect / total) * 100) : 0
+  const accuracyLabel = accuracyPercentage >= 80 ? 'Excellent' : accuracyPercentage >= 60 ? 'Good' : accuracyPercentage >= 40 ? 'Keep building' : 'Needs revision'
 
   let feedback = { text: 'Keep practicing!', color: 'text-rose-500', icon: 'fa-face-frown' }
-  if (percentage >= 80) feedback = { text: 'Excellent work!', color: 'text-emerald-500', icon: 'fa-face-laugh-beam' }
-  else if (percentage >= 60) feedback = { text: 'Good job!', color: 'text-primary-500', icon: 'fa-face-smile' }
-  else if (percentage >= 40) feedback = { text: 'Nice try, keep going!', color: 'text-amber-500', icon: 'fa-face-meh' }
+  if (accuracyPercentage >= 80) feedback = { text: 'Excellent work!', color: 'text-emerald-500', icon: 'fa-face-laugh-beam' }
+  else if (accuracyPercentage >= 60) feedback = { text: 'Good job!', color: 'text-primary-500', icon: 'fa-face-smile' }
+  else if (accuracyPercentage >= 40) feedback = { text: 'Nice try, keep going!', color: 'text-amber-500', icon: 'fa-face-meh' }
 
   return (
     <div className="mx-auto max-w-2xl space-y-5">
@@ -57,15 +62,22 @@ export default function QuizResult() {
         <div className="relative">
           <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 border-white/25 bg-white/10 text-2xl font-black backdrop-blur-sm">{percentage}%</div>
           <p className="mt-4 text-lg font-extrabold">{accuracyLabel}</p>
-          <p className="mt-1 text-sm text-white/75">{score} correct out of {total}</p>
+          {hasNegativeMarking ? (
+            <>
+              <p className="mt-1 text-sm text-white/85">Net score: <strong>{rawNetScore}</strong> / {total}</p>
+              <p className="mt-1 text-xs text-white/65">{actualCorrect} correct · {actualWrong} wrong · {actualUnanswered} unanswered · −{negativeMarking} per wrong answer</p>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-white/75">{actualCorrect} correct out of {total}</p>
+          )}
           <p className="mt-3 text-sm font-bold text-white"><i className={`fas ${feedback.icon} mr-1`}></i>{feedback.text}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        <Stat value={total} label="Total" />
-        <Stat value={score} label="Correct" tone="good" />
-        <Stat value={wrong} label="Wrong" tone="bad" />
+        <Stat value={actualCorrect} label="Correct" tone="good" />
+        <Stat value={actualWrong} label="Wrong" tone="bad" />
+        <Stat value={actualUnanswered} label="Unanswered" />
       </div>
 
       <div className="card p-4">
@@ -87,7 +99,7 @@ export default function QuizResult() {
         <div className="space-y-3 animate-slide-up">
           <div className="flex items-center justify-between">
             <h2 className="section-title">Answer Review</h2>
-            <span className="text-xs text-slate-400">{wrong} to revise</span>
+            <span className="text-xs text-slate-400">{actualWrong + actualUnanswered} to revise</span>
           </div>
           {answers.map((a, idx) => {
             const correctIndex = Number.isInteger(a.correctIndex) ? a.correctIndex : getCorrectIndex(a.question)
@@ -102,6 +114,7 @@ export default function QuizResult() {
                     <div className="mt-2 space-y-1 text-xs">
                       <p className="text-slate-500">Your answer: <span className={a.correct ? 'font-semibold text-emerald-600' : 'font-semibold text-rose-500'}>{a.selected !== null ? `${OPTION_LABELS[a.selected]}. ${a.question.options[a.selected]}` : 'Not answered'}</span></p>
                       {!a.correct && <p className="text-slate-500">Correct answer: <span className="font-semibold text-emerald-600">{correctIndex >= 0 ? `${OPTION_LABELS[correctIndex]}. ${a.question.options[correctIndex]}` : 'Answer key unavailable'}</span></p>}
+                      {a.timedOut && <p className="font-semibold text-amber-600 dark:text-amber-300">Timed out.</p>}
                       <p className="pt-1 leading-relaxed text-slate-400">{a.question.explanation}</p>
                     </div>
                   </div>
