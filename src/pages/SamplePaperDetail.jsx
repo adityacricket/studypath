@@ -2,9 +2,16 @@ import React from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { samplePapers } from '../data/samplePapers.js'
 import { upscSamplePapers } from '../data/upscSamplePapers.js'
+import { sscCglSamplePapersV2 } from '../data/sscCglSamplePapersV2.js'
 
 const upscById = Object.fromEntries(
   upscSamplePapers
+    .filter((paper) => paper?.id && paper?.questions?.length)
+    .map((paper) => [paper.id, paper])
+)
+
+const sscById = Object.fromEntries(
+  sscCglSamplePapersV2
     .filter((paper) => paper?.id && paper?.questions?.length)
     .map((paper) => [paper.id, paper])
 )
@@ -14,7 +21,8 @@ export default function SamplePaperDetail() {
   const navigate = useNavigate()
   const legacyPaper = samplePapers[paperId]
   const upscPaper = upscById[paperId]
-  const paper = upscPaper || legacyPaper
+  const sscPaper = sscById[paperId]
+  const paper = sscPaper || upscPaper || legacyPaper
 
   if (!paper) {
     const knownUpsc = upscSamplePapers.find((item) => item.id === paperId)
@@ -41,7 +49,8 @@ export default function SamplePaperDetail() {
   const questionCount = paper.questions?.length || 0
   const duration = paper.duration || 120
   const isUpsc = Boolean(upscPaper)
-  const isFullLength = isUpsc && questionCount >= 100
+  const isSsc = Boolean(sscPaper)
+  const isFullLength = (isUpsc || isSsc) && questionCount >= 100
   const topics = [...new Set((paper.questions || []).map((q) => q.topic).filter(Boolean))]
 
   const startPaper = () => {
@@ -54,6 +63,9 @@ export default function SamplePaperDetail() {
         examName: paper.title,
         duration,
         fullLength: isFullLength,
+        sectionTimers: paper.sectionTimers || null,
+        negativeMarking: Number(paper.negativeMarking || 0),
+        maxMarks: Number(paper.marks || 0),
         source: 'sample-paper',
       },
     })
@@ -89,8 +101,22 @@ export default function SamplePaperDetail() {
         <div className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
           <p><i className="fas fa-circle-check mr-2 text-emerald-500" />{questionCount} original practice questions with four options each.</p>
           <p><i className="fas fa-circle-check mr-2 text-emerald-500" />Every question includes an answer and explanation for review.</p>
-          <p><i className="fas fa-circle-info mr-2 text-primary-500" />{isUpsc ? 'UPSC CSE practice paper — free to attempt.' : 'Original StudyPath practice paper — free to attempt.'}</p>
-          {isFullLength && <p><i className="fas fa-clock mr-2 text-primary-500" />The full paper uses one continuous {duration}-minute timer.</p>}
+          <p><i className="fas fa-circle-info mr-2 text-primary-500" />{isSsc ? 'SSC CGL Tier-I model paper — free to attempt.' : isUpsc ? 'UPSC CSE practice paper — free to attempt.' : 'Original StudyPath practice paper — free to attempt.'}</p>
+          {paper.marks && <p><i className="fas fa-star mr-2 text-amber-500" />Maximum marks: {paper.marks}. Wrong answer penalty: {paper.negativeMarking || 0} marks.</p>}
+          {paper.sectionTimers?.length > 0 && (
+            <div className="rounded-xl bg-indigo-50 p-3 dark:bg-indigo-900/20">
+              <p className="mb-2 text-xs font-black uppercase tracking-wider text-indigo-600 dark:text-indigo-300">Section timers</p>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {paper.sectionTimers.map((section) => (
+                  <div key={section.name} className="flex items-center justify-between rounded-lg bg-white px-3 py-2 text-xs dark:bg-slate-800">
+                    <span className="font-semibold">{section.name}</span>
+                    <span className="font-black text-indigo-600 dark:text-indigo-300">{section.questions} · {section.minutes} min</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {isFullLength && !paper.sectionTimers?.length && <p><i className="fas fa-clock mr-2 text-primary-500" />The full paper uses one continuous {duration}-minute timer.</p>}
         </div>
 
         <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/60">
