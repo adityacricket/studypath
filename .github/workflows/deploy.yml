@@ -10,9 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Do not cancel an older deployment when another commit arrives.
+# Runs are queued so every main commit can finish, and the newest commit
+# will be the final deployment in the queue.
 concurrency:
   group: "studypath-pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -53,6 +56,7 @@ jobs:
           test -f dist/404.html
           test -f dist/build.json
           test -d dist/assets
+          grep -q "$GITHUB_SHA" dist/build.json
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
@@ -75,3 +79,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify deployed commit
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: |
+          set -e
+          for attempt in {1..12}; do
+            marker="$(curl -fsSL --max-time 10 "${SITE_URL}build.json" 2>/dev/null || true)"
+            if echo "$marker" | grep -q "$EXPECTED_COMMIT"; then
+              echo "Live site is serving commit $EXPECTED_COMMIT"
+              exit 0
+            fi
+            echo "Waiting for Pages propagation (attempt $attempt/12)..."
+            sleep 10
+          done
+          echo "Live site did not expose expected commit $EXPECTED_COMMIT"
+          exit 1
