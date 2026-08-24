@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { pyqCoverage } from '../data/pyqLibrary.js'
 
 const official = pyqCoverage['ssc-cgl']
+const originalPracticePath = '/pyq/ssc-cgl-original-practice-2024/tier-1'
 
 export default function PYQ() {
   const [year, setYear] = useState('all')
@@ -21,7 +22,7 @@ export default function PYQ() {
         <div className="mt-2 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-3xl font-black">SSC CGL PYQ Library</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">Choose a year and open Tier I or Tier II directly in the StudyPath paper viewer. No learner-facing Open Paper button sends you to another website.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">Browse the indexed SSC CGL PYQ years. Official papers are shown as an index until an authorized paper asset is supplied; StudyPath never presents an original practice paper as an official PYQ.</p>
           </div>
           <div className="rounded-2xl bg-white/10 px-5 py-4 text-center backdrop-blur">
             <div className="text-2xl font-black">{official.years.length}</div>
@@ -30,11 +31,22 @@ export default function PYQ() {
         </div>
       </section>
 
+      <section className="card border border-indigo-100 bg-indigo-50/60 p-5 dark:border-indigo-900/50 dark:bg-indigo-950/20">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.18em] text-indigo-500">Ready to practice</p>
+            <h2 className="mt-1 font-black text-slate-900 dark:text-white">SSC CGL Tier-I — StudyPath Original Practice Paper</h2>
+            <p className="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-400">20 original questions based on the SSC CGL Tier-I pattern. This is practice content, not an official SSC paper.</p>
+          </div>
+          <Link to={originalPracticePath} className="shrink-0 rounded-xl bg-indigo-600 px-4 py-3 text-center text-sm font-black text-white hover:bg-indigo-700">Start Practice</Link>
+        </div>
+      </section>
+
       <section className="card p-4 md:p-5">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="font-black text-slate-900 dark:text-white">Coverage: {official.firstIndexedYear}–{official.lastIndexedYear}</h2>
-            <p className="mt-1 text-xs text-slate-400">Tier I + Tier II · StudyPath viewer</p>
+            <p className="mt-1 text-xs text-slate-400">Tier I + Tier II · indexed coverage</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <select value={year} onChange={(e) => setYear(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
@@ -58,7 +70,7 @@ export default function PYQ() {
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500">SSC CGL</p>
                 <h2 className="mt-1 text-xl font-black">{paper.year}</h2>
               </div>
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-black text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">PYQ</span>
+              <span className="rounded-full bg-amber-50 px-3 py-1 text-[10px] font-black text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">Indexed</span>
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-2">
@@ -71,26 +83,9 @@ export default function PYQ() {
             </div>
 
             <p className="mt-4 text-xs leading-5 text-slate-500 dark:text-slate-400">{paper.sourceNote}</p>
-
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {paper.tiers.map((item) => (
-                <Link key={item.tier} to={item.viewerPath} className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-black text-white hover:bg-indigo-700">
-                  <i className="fas fa-file-pdf" /> Open {item.tier}
-                </Link>
-              ))}
-            </div>
+            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300">Official paper viewer is locked until an authorized/licensed paper asset is added. This prevents the site from showing the wrong paper under a PYQ year.</div>
           </article>
         ))}
-      </section>
-
-      <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900/50 dark:bg-amber-950/20">
-        <div className="flex gap-3">
-          <i className="fas fa-circle-info mt-0.5 text-amber-600" />
-          <div>
-            <h3 className="text-sm font-black text-amber-900 dark:text-amber-200">One important step remains</h3>
-            <p className="mt-1 text-xs leading-5 text-amber-800/80 dark:text-amber-200/70">The viewer is now internal to StudyPath. To display the actual papers, the corresponding PDF assets must be supplied or licensed for hosting and placed under the StudyPath public/pyqs folder.</p>
-          </div>
-        </div>
       </section>
     </div>
   )
