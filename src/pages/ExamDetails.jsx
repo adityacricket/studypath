@@ -4,6 +4,7 @@ import { getExamById } from '../data/exams.js'
 import { subjects as quizSubjects } from '../data/quizzes.js'
 import { upscMock01 } from '../data/upscMock01.js'
 import { getExamMock } from '../data/examMocks.js'
+import { getExamMockStandard } from '../data/examMockStandards.js'
 import { useApp } from '../context/AppContext.jsx'
 import AdSlot from '../components/AdSlot.jsx'
 import NotFound from './NotFound.jsx'
@@ -23,11 +24,15 @@ export default function ExamDetails() {
   const [tab, setTab] = useState('overview')
   const { updateProfile, profile } = useApp()
   const examMock = getExamMock(examId)
+  const mockStandard = getExamMockStandard(examId)
 
   if (!exam) return <NotFound />
 
   const isSelected = profile.selectedExam === exam.id
   const mock = exam.id === 'upsc-cse' ? upscMock01 : examMock
+  const availableQuestions = mock?.questions?.length || 0
+  const targetQuestions = mockStandard?.questions
+  const isFullLength = Number.isInteger(targetQuestions) ? availableQuestions >= targetQuestions : false
 
   const openMock = () => {
     if (!mock?.questions?.length) return
@@ -38,7 +43,10 @@ export default function ExamDetails() {
         subject: exam.name,
         examName: exam.name,
         mixed: true,
-        duration: mock.duration || 30,
+        duration: mockStandard?.duration || mock.duration || 30,
+        fullLength: isFullLength,
+        scoring: mockStandard?.scoring || null,
+        examStandard: mockStandard || null,
       },
     })
   }
@@ -87,8 +95,9 @@ export default function ExamDetails() {
             <div className="flex items-start gap-3">
               <div className="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0"><i className="fas fa-file-circle-check"></i></div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 flex-wrap"><h3 className="font-bold text-sm">{mock?.title || `${exam.name} Practice Mock 01`}</h3><span className="badge bg-emerald-100 text-emerald-700">FREE</span></div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{mock?.questions?.length || 0} original questions • answers • explanations</p>
+                <div className="flex items-center gap-2 flex-wrap"><h3 className="font-bold text-sm">{mock?.title || `${exam.name} Practice Mock 01`}</h3><span className={`badge ${isFullLength ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{isFullLength ? 'FULL MOCK' : 'PRACTICE SET'}</span></div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{availableQuestions} questions • answers • explanations</p>
+                {mockStandard && <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Exam format: {mockStandard.duration} min{mockStandard.marks ? ` • ${mockStandard.marks} marks` : ''}{targetQuestions ? ` • ${targetQuestions} questions` : ''}</p>}
                 <button onClick={openMock} disabled={!mock?.questions?.length} className="btn-primary inline-flex mt-3 disabled:opacity-50"><i className="fas fa-book-open"></i> Open Mock</button>
               </div>
             </div>
