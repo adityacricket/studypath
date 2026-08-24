@@ -1,6 +1,26 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+const OPTION_LABELS = ['A', 'B', 'C', 'D']
+
+function getCorrectIndex(question) {
+  const raw = question?.answer
+  if (Number.isInteger(raw)) return raw >= 0 && raw < 4 ? raw : -1
+
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim()
+    const letter = trimmed.match(/^[A-Da-d]/)?.[0]?.toUpperCase()
+    if (letter) return OPTION_LABELS.indexOf(letter)
+    const parsed = Number(trimmed)
+    if (Number.isInteger(parsed)) {
+      if (parsed >= 0 && parsed < 4) return parsed
+      if (parsed >= 1 && parsed <= 4) return parsed - 1
+    }
+  }
+
+  return -1
+}
+
 export default function QuizResult() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -35,14 +55,10 @@ export default function QuizResult() {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-indigo-600 to-violet-700 p-6 text-center text-white shadow-xl">
         <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-white/10" />
         <div className="relative">
-          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 border-white/25 bg-white/10 text-2xl font-black backdrop-blur-sm">
-            {percentage}%
-          </div>
+          <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full border-4 border-white/25 bg-white/10 text-2xl font-black backdrop-blur-sm">{percentage}%</div>
           <p className="mt-4 text-lg font-extrabold">{accuracyLabel}</p>
           <p className="mt-1 text-sm text-white/75">{score} correct out of {total}</p>
-          <p className={`mt-3 text-sm font-bold ${feedback.color.replace('text-', 'text-white ')}`}>
-            <i className={`fas ${feedback.icon} mr-1`}></i>{feedback.text}
-          </p>
+          <p className="mt-3 text-sm font-bold text-white"><i className={`fas ${feedback.icon} mr-1`}></i>{feedback.text}</p>
         </div>
       </div>
 
@@ -63,12 +79,8 @@ export default function QuizResult() {
       </div>
 
       <div className="flex flex-col gap-2 sm:flex-row">
-        <button onClick={() => setShowReview(!showReview)} className="btn-outline flex-1 py-3">
-          <i className="fas fa-list-check"></i> {showReview ? 'Hide' : 'Review'} Answers
-        </button>
-        <button onClick={() => navigate('/quiz')} className="btn-primary flex-1 py-3">
-          <i className="fas fa-rotate"></i> Try Another Quiz
-        </button>
+        <button onClick={() => setShowReview(!showReview)} className="btn-outline flex-1 py-3"><i className="fas fa-list-check"></i> {showReview ? 'Hide' : 'Review'} Answers</button>
+        <button onClick={() => navigate('/quiz')} className="btn-primary flex-1 py-3"><i className="fas fa-rotate"></i> Try Another Quiz</button>
       </div>
 
       {showReview && (
@@ -77,23 +89,26 @@ export default function QuizResult() {
             <h2 className="section-title">Answer Review</h2>
             <span className="text-xs text-slate-400">{wrong} to revise</span>
           </div>
-          {answers.map((a, idx) => (
-            <div key={idx} className="card p-4">
-              <div className="flex items-start gap-3">
-                <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${a.correct ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-300' : 'bg-rose-100 text-rose-500 dark:bg-rose-900/30 dark:text-rose-300'}`}>
-                  {a.correct ? <i className="fas fa-check"></i> : <i className="fas fa-xmark"></i>}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold">{a.question.question}</p>
-                  <div className="mt-2 space-y-1 text-xs">
-                    <p className="text-slate-500">Your answer: <span className={a.correct ? 'font-semibold text-emerald-600' : 'font-semibold text-rose-500'}>{a.selected !== null ? a.question.options[a.selected] : 'Not answered'}</span></p>
-                    {!a.correct && <p className="text-slate-500">Correct answer: <span className="font-semibold text-emerald-600">{a.question.options[a.question.answer]}</span></p>}
-                    <p className="pt-1 leading-relaxed text-slate-400">{a.question.explanation}</p>
+          {answers.map((a, idx) => {
+            const correctIndex = Number.isInteger(a.correctIndex) ? a.correctIndex : getCorrectIndex(a.question)
+            return (
+              <div key={idx} className="card p-4">
+                <div className="flex items-start gap-3">
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${a.correct ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-300' : 'bg-rose-100 text-rose-500 dark:bg-rose-900/30 dark:text-rose-300'}`}>
+                    {a.correct ? <i className="fas fa-check"></i> : <i className="fas fa-xmark"></i>}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold">{a.question.question}</p>
+                    <div className="mt-2 space-y-1 text-xs">
+                      <p className="text-slate-500">Your answer: <span className={a.correct ? 'font-semibold text-emerald-600' : 'font-semibold text-rose-500'}>{a.selected !== null ? `${OPTION_LABELS[a.selected]}. ${a.question.options[a.selected]}` : 'Not answered'}</span></p>
+                      {!a.correct && <p className="text-slate-500">Correct answer: <span className="font-semibold text-emerald-600">{correctIndex >= 0 ? `${OPTION_LABELS[correctIndex]}. ${a.question.options[correctIndex]}` : 'Answer key unavailable'}</span></p>}
+                      <p className="pt-1 leading-relaxed text-slate-400">{a.question.explanation}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
