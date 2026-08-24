@@ -48,6 +48,7 @@ export default function QuizPlay() {
   const [answers, setAnswers] = useState([])
   const [timeLeft, setTimeLeft] = useState(totalDurationSeconds)
   const answersRef = useRef([])
+  const finishQuizRef = useRef(null)
 
   const { addQuizResult, addMockScore, recordMistake, completeStudySession } = useApp()
 
@@ -57,14 +58,6 @@ export default function QuizPlay() {
   useEffect(() => {
     answersRef.current = answers
   }, [answers])
-
-  useEffect(() => {
-    if (!isFullLength) {
-      setSelectedOption(null)
-      setShowExplanation(false)
-      setTimeLeft(30)
-    }
-  }, [currentIdx, isFullLength])
 
   function finishQuiz(finalAnswers) {
     const score = finalAnswers.filter((a) => a.correct).length
@@ -101,6 +94,16 @@ export default function QuizPlay() {
     })
   }
 
+  finishQuizRef.current = finishQuiz
+
+  useEffect(() => {
+    if (!isFullLength) {
+      setSelectedOption(null)
+      setShowExplanation(false)
+      setTimeLeft(30)
+    }
+  }, [currentIdx, isFullLength])
+
   useEffect(() => {
     if (!questions.length || (!isFullLength && showExplanation)) return undefined
 
@@ -134,7 +137,7 @@ export default function QuizPlay() {
               note: 'Question timed out before the full-length paper was submitted.',
             })
           })
-          finishQuiz(finalAnswers)
+          finishQuizRef.current?.(finalAnswers)
           return 0
         }
 
@@ -149,8 +152,9 @@ export default function QuizPlay() {
           }
           setSelectedOption(null)
           setShowExplanation(true)
-          setAnswers((prev) => [...prev, entry])
-          answersRef.current = [...answersRef.current, entry]
+          const nextAnswers = [...answersRef.current, entry]
+          answersRef.current = nextAnswers
+          setAnswers(nextAnswers)
           recordMistake({
             questionId: question.id,
             topic: question.topic,
@@ -163,7 +167,7 @@ export default function QuizPlay() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [currentIdx, finishQuiz, isFullLength, question, questions, recordMistake, showExplanation])
+  }, [currentIdx, isFullLength, question, questions, recordMistake, showExplanation])
 
   if (!questions.length) {
     return (
@@ -218,24 +222,17 @@ export default function QuizPlay() {
       return
     }
 
-    finishQuiz(answersRef.current)
+    finishQuizRef.current?.(answersRef.current)
   }
 
-  const optionLabels = OPTION_LABELS
-  const displayMinutes = Math.floor(timeLeft / 60)
-  const displaySeconds = timeLeft % 60
   const timerLabel = isFullLength
-    ? `${displayMinutes}:${String(displaySeconds).padStart(2, '0')}`
+    ? `${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, '0')}`
     : String(timeLeft)
 
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <div className="flex items-center gap-3">
-        <button
-          onClick={() => navigate('/quiz')}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900"
-          aria-label="Exit quiz"
-        >
+        <button onClick={() => navigate('/quiz')} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900" aria-label="Exit quiz">
           <i className="fas fa-xmark text-sm"></i>
         </button>
 
@@ -249,14 +246,7 @@ export default function QuizPlay() {
           </div>
         </div>
 
-        <div
-          className={`flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-xs font-bold ${
-            timeLeft <= (isFullLength ? 300 : 10)
-              ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30'
-              : 'bg-slate-100 text-slate-500 dark:bg-slate-800'
-          }`}
-          aria-label="Time remaining"
-        >
+        <div className={`flex h-10 min-w-10 shrink-0 items-center justify-center rounded-full px-2 text-xs font-bold ${timeLeft <= (isFullLength ? 300 : 10) ? 'bg-rose-100 text-rose-600 dark:bg-rose-900/30' : 'bg-slate-100 text-slate-500 dark:bg-slate-800'}`} aria-label="Time remaining">
           {timerLabel}
         </div>
       </div>
@@ -264,9 +254,7 @@ export default function QuizPlay() {
       <div className="card animate-slide-up p-5">
         <div className="mb-3 flex items-center gap-2">
           <span className="badge bg-slate-100 text-slate-500 dark:bg-slate-800">{question.topic}</span>
-          <span className={`badge ${question.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' : question.difficulty === 'Medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300'}`}>
-            {question.difficulty}
-          </span>
+          <span className={`badge ${question.difficulty === 'Easy' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' : question.difficulty === 'Medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' : 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300'}`}>{question.difficulty}</span>
         </div>
 
         <p className="mb-4 text-base font-semibold">{question.question}</p>
@@ -283,13 +271,8 @@ export default function QuizPlay() {
             }
 
             return (
-              <button
-                key={idx}
-                onClick={() => handleAnswer(idx)}
-                disabled={showExplanation}
-                className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${stateClass}`}
-              >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold dark:bg-slate-800">{optionLabels[idx]}</span>
+              <button key={idx} onClick={() => handleAnswer(idx)} disabled={showExplanation} className={`flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${stateClass}`}>
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold dark:bg-slate-800">{OPTION_LABELS[idx]}</span>
                 <span className="flex-1">{opt}</span>
                 {showExplanation && idx === correctIndex && <i className="fas fa-circle-check text-emerald-500"></i>}
                 {showExplanation && idx === selectedOption && idx !== correctIndex && <i className="fas fa-circle-xmark text-rose-500"></i>}
