@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { pyqCoverage } from '../data/pyqLibrary.js'
 
 const official = pyqCoverage['ssc-cgl']
@@ -20,7 +21,7 @@ export default function PYQ() {
         <div className="mt-2 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-3xl font-black">SSC CGL PYQ Library</h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">Year-wise coverage for Tier I and Tier II, with official SSC source access. StudyPath does not republish copyrighted question-paper text.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">Choose a year and open Tier I or Tier II directly in the StudyPath paper viewer. No learner-facing Open Paper button sends you to another website.</p>
           </div>
           <div className="rounded-2xl bg-white/10 px-5 py-4 text-center backdrop-blur">
             <div className="text-2xl font-black">{official.years.length}</div>
@@ -33,7 +34,7 @@ export default function PYQ() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="font-black text-slate-900 dark:text-white">Coverage: {official.firstIndexedYear}–{official.lastIndexedYear}</h2>
-            <p className="mt-1 text-xs text-slate-400">Tier I + Tier II historical index</p>
+            <p className="mt-1 text-xs text-slate-400">Tier I + Tier II · StudyPath viewer</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <select value={year} onChange={(e) => setYear(e.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
@@ -64,20 +65,19 @@ export default function PYQ() {
               {paper.tiers.map((item) => (
                 <div key={item.tier} className="rounded-xl bg-slate-50 p-3 dark:bg-slate-800/60">
                   <p className="text-xs font-black text-slate-700 dark:text-slate-200">{item.tier}</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.status === 'official-archive' ? 'Official archive' : 'Historical index'}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">{item.status === 'official-archive' ? 'Archive indexed' : 'Historical index'}</p>
                 </div>
               ))}
             </div>
 
             <p className="mt-4 text-xs leading-5 text-slate-500 dark:text-slate-400">{paper.sourceNote}</p>
 
-            <div className="mt-4 grid gap-2 sm:grid-cols-2">
-              <a href={paper.sourceUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-black text-white hover:bg-indigo-700">
-                Official SSC <i className="fas fa-arrow-up-right-from-square text-[10px]" />
-              </a>
-              <a href={paper.answerKeyUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-black text-indigo-600 dark:border-slate-700 dark:bg-slate-900 dark:text-indigo-300">
-                Answer Key Archive <i className="fas fa-key text-[10px]" />
-              </a>
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {paper.tiers.map((item) => (
+                <Link key={item.tier} to={item.viewerPath} className="flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-black text-white hover:bg-indigo-700">
+                  <i className="fas fa-file-pdf" /> Open {item.tier}
+                </Link>
+              ))}
             </div>
           </article>
         ))}
@@ -87,8 +87,8 @@ export default function PYQ() {
         <div className="flex gap-3">
           <i className="fas fa-circle-info mt-0.5 text-amber-600" />
           <div>
-            <h3 className="text-sm font-black text-amber-900 dark:text-amber-200">Important source note</h3>
-            <p className="mt-1 text-xs leading-5 text-amber-800/80 dark:text-amber-200/70">SSC's archive contains official answer-key/question-paper releases for various years, while some candidate response sheets are time-limited or login-gated. This page records the coverage without copying the original paper text into StudyPath.</p>
+            <h3 className="text-sm font-black text-amber-900 dark:text-amber-200">One important step remains</h3>
+            <p className="mt-1 text-xs leading-5 text-amber-800/80 dark:text-amber-200/70">The viewer is now internal to StudyPath. To display the actual papers, the corresponding PDF assets must be supplied or licensed for hosting and placed under the StudyPath public/pyqs folder.</p>
           </div>
         </div>
       </section>
