@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getExamById } from '../data/exams.js'
 import { subjects as quizSubjects } from '../data/quizzes.js'
 import { upscMock01 } from '../data/upscMock01.js'
+import { sscCglMock01 } from '../data/sscCglMock01.js'
 import { getExamMock } from '../data/examMocks.js'
 import { getExamMockStandard } from '../data/examMockStandards.js'
 import { useApp } from '../context/AppContext.jsx'
@@ -29,7 +30,7 @@ export default function ExamDetails() {
   if (!exam) return <NotFound />
 
   const isSelected = profile.selectedExam === exam.id
-  const mock = exam.id === 'upsc-cse' ? upscMock01 : examMock
+  const mock = exam.id === 'upsc-cse' ? upscMock01 : exam.id === 'ssc-cgl' ? sscCglMock01 : examMock
   const availableQuestions = mock?.questions?.length || 0
   const targetQuestions = mockStandard?.questions
   const isFullLength = Number.isInteger(targetQuestions) ? availableQuestions >= targetQuestions : false
