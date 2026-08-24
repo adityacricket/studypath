@@ -8,6 +8,7 @@ const navItems = [
   { to: '/books', label: 'Study Books', icon: 'fa-book-open' },
   { to: '/resources', label: 'Resources', icon: 'fa-book' },
   { to: '/sample-papers', label: 'Sample Papers', icon: 'fa-file-lines' },
+  { to: '/pyq', label: 'PYQ Library', icon: 'fa-clock-rotate-left' },
   { to: '/quiz', label: 'Quiz & Mock', icon: 'fa-brain' },
   { to: '/planner', label: 'Planner', icon: 'fa-calendar-days' },
   { to: '/tools', label: 'Study Tools', icon: 'fa-calculator' },
