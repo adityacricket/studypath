@@ -32,7 +32,7 @@ import SearchPage from './pages/SearchPage.jsx'
 import SamplePapers from './pages/SamplePapers.jsx'
 import SamplePaperDetail from './pages/SamplePaperDetail.jsx'
 import PYQ from './pages/PYQ.jsx'
-import PYQPaperViewer from './pages/PYQPaperViewer.jsx'
+import PYQPracticeViewer from './pages/PYQPracticeViewer.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -46,44 +46,34 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/coach" element={<StudyCoach />} />
-
           <Route path="/exams" element={<ExamHub />} />
           <Route path="/exams/:examId" element={<ExamDetails />} />
-
           <Route path="/books" element={<Books />} />
           <Route path="/books/:examId" element={<BookIndex />} />
           <Route path="/books/:examId/:chapterId" element={<BookChapter />} />
-
           <Route path="/tools" element={<Tools />} />
           <Route path="/tools/:toolId" element={<ToolDetail />} />
-
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/quiz/play" element={<QuizPlay />} />
           <Route path="/quiz/result" element={<QuizResult />} />
-
           <Route path="/sample-papers" element={<SamplePapers />} />
           <Route path="/sample-papers/:paperId" element={<SamplePaperDetail />} />
           <Route path="/pyq" element={<PYQ />} />
-          <Route path="/pyq/:paperId/:tier" element={<PYQPaperViewer />} />
+          <Route path="/pyq/:paperId/:tier" element={<PYQPracticeViewer />} />
           <Route path="/planner" element={<Planner />} />
-
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/:careerId" element={<CareerDetail />} />
-
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/:resourceId" element={<ResourceViewer />} />
-
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/account" element={<Account />} />
           <Route path="/premium" element={<Premium />} />
           <Route path="/settings" element={<Settings />} />
-
           <Route path="/search" element={<SearchPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-
       <BottomNav />
     </div>
   )
